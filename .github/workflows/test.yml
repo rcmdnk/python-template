@@ -5,6 +5,7 @@ on:
   push:
     branches-ignore:
       - "coverage"
+      - "renovate/**"
   pull_request:
 
 concurrency:
@@ -14,6 +15,7 @@ concurrency:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.10"]

@@ -7,6 +7,10 @@ on:
       - "coverage"
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   template_test:
     strategy:
@@ -16,10 +20,6 @@ jobs:
         cli: ["no", "yes"]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - uses: actions/checkout@v3
         with:
           persist-credentials: false

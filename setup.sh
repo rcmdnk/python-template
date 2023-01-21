@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-py_ver="3.10" # "3.10,3.9,3.8"
+py_ver="3.10" # "3.10, 3.9, 3.8", need quotes for each version in the quote.
 py_main=${py_ver%%,*}
-os="ubuntu-latest" # "ubuntu-latest,macos-latest,windows-latest"
+os="ubuntu-latest" # "ubuntu-latest, macos-latest, windows-latest"
 os_main=${os%%,*}
 cli="no" # "yes" or "no"
 
@@ -17,7 +17,12 @@ repo_name_underscore=${repo_name//-/_}
 
 py_max=0
 py_min=100
+py_vers=""
 for p in ${py_ver//,/ };do
+  if [ -n "$py_vers" ];then
+    py_vers="${py_vers}, "
+  fi
+  py_vers="${py_vers}\"$p\""
   ver=${p#*.}
   if (( ver > py_max ));then
     py_max=$ver
@@ -48,7 +53,7 @@ cat << EOF > README.md
 
 ## Requirement
 
-- Python ${py_ver//,/, }
+- Python ${py_vers//\"/}
 - Poetry (For development)
 
 ## Installation
@@ -159,7 +164,7 @@ sedi "s/name of copyright owner/@${user}/" LICENSE
 mv "src/python_template" "src/$repo_name_underscore"
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 
-sedi "s/python-version: \[\"3.10\"\]/python-version: \[\"$py_ver\"\]/" .github/workflows/test.yml
+sedi "s/python-version: \[\"3.10\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
 sedi "s/test \"\${{ matrix.python-version }}\" == \"3.10\"/test \"\${{ matrix.python-version }}\" == \"$py_main\"/" .github/workflows/test.yml
 sedi "s/os: \[ubuntu-latest\]/os: \[$os\]/" .github/workflows/test.yml
 sedi "s/test \"\${{ matrix.os }}\" == \"ubuntu-latest\"/test \"\${{ matrix.os }}\" == \"$os_main\"/" .github/workflows/test.yml
