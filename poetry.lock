@@ -691,14 +691,14 @@ test = ["coverage", "pytest (>=6.0,<7.0)", "pytest-cov"]
 
 [[package]]
 name = "mdformat-frontmatter"
-version = "0.4.1"
+version = "2.0.1"
 description = "An mdformat plugin for parsing / ignoring frontmatter."
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "mdformat_frontmatter-0.4.1-py3-none-any.whl", hash = "sha256:9c13f6b7a53de7b401af3c95e66735237545bd174e6619392153b296135ffd49"},
-    {file = "mdformat_frontmatter-0.4.1.tar.gz", hash = "sha256:15d3eed1543849d4fe72b1f75b8dffd8b49750c5149186591a1b9617178e2aa2"},
+    {file = "mdformat_frontmatter-2.0.1-py3-none-any.whl", hash = "sha256:354143935a103d6049239f5c2df288c80d0fbea8f7dd9e535ccc180e8c5aa235"},
+    {file = "mdformat_frontmatter-2.0.1.tar.gz", hash = "sha256:a05c188ba2f483ab434b4e46e312c1a2ccf145e9ab95e3f493f8967c182ffd5c"},
 ]
 
 [package.dependencies]
@@ -1400,4 +1400,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "a2aef43788e5becee23400f9031a6c600bbb9ed64f8bcc3277749f2a4de095dc"
+content-hash = "3752a036b58118abe37fd07f9eb5de739b8de78a56e3767853cca8501c94b924"
