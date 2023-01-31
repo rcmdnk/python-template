@@ -4,6 +4,14 @@
     "config:base",
     ":timezone(Asia/Tokyo)"
   ],
+  "schedule": ["before 3am on Monday"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": [
+      "before 6am on Monday"
+    ]
+  },
   "pre-commit": {
     "enabled": true
   },
