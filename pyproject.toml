@@ -11,12 +11,19 @@ python = ">=3.10,<3.11"
 pytest = "7.2.1"
 pytest-cov = "4.0.0"
 pytest-xdist = "3.1.0"
+pytest-benchmark = "4.0.0"
 pre-commit = "2.21.0"
 black = "22.12.0"
 blacken-docs = "1.13.0"
-pyproject-flake8 = "6.0.0.post1"
+flake8-pyproject = "1.2.2"
 flake8-bugbear = "23.1.20"
 flake8-docstrings = "1.7.0"
+flake8-debugger = "4.1.2"
+pep8-naming = "0.13.3"
+flake8-comprehensions = "3.10.1"
+pycodestyle = "2.10.0"
+flake8-string-format = "0.3.0"
+flake8-rst-docstrings = "0.3.0"
 autoflake = "2.0.0"
 autopep8 = "2.0.1"
 isort = "5.12.0"
@@ -51,6 +58,10 @@ ignore = "E203,E501,W503"
 recursive = true
 aggressive = 3
 
+[tool.isort]
+profile = "black"
+line_length = 79
+
 [tool.flake8]
 # E203 is not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
 # E501: Line too long. Disable it to allow long lines of comments and print lines which black allows.
@@ -61,18 +72,11 @@ ignore = "E203,E501,W503,D100,D102,D103,D104,D105,D106,D401"
 max-complexity = 10
 docstring-convention = "numpy"
 
-[tool.isort]
-profile = "black"
-line_length = 79
+[tool.bandit]
+exclude_dirs = ["tests"]
 
 [tool.mypy]
 files = ["src/**/*.py"]
+strict = true
 ignore_missing_imports = true
 scripts_are_modules = true
-warn_unused_ignores = true
-warn_redundant_casts = true
-install_types = true
-non_interactive = true
-
-[tool.bandit]
-exclude_dirs = ["tests"]
