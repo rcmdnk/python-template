@@ -831,14 +831,14 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-extensions"
-version = "0.4.3"
-description = "Experimental type system extensions for programs checked with the mypy typechecker."
+version = "1.0.0"
+description = "Type system extensions for programs checked with the mypy type checker."
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.5"
 files = [
-    {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
-    {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
+    {file = "mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d"},
+    {file = "mypy_extensions-1.0.0.tar.gz", hash = "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782"},
 ]
 
 [[package]]
@@ -1042,6 +1042,48 @@ files = [
 
 [package.extras]
 plugins = ["importlib-metadata"]
+
+[[package]]
+name = "pyproject-pre-commit"
+version = "0.0.1"
+description = ""
+category = "dev"
+optional = false
+python-versions = ">=3.9,<3.12"
+files = [
+    {file = "pyproject_pre_commit-0.0.1-py3-none-any.whl", hash = "sha256:0fc23dce3b31f6fa8686613aa357d979aafdd990984927ae33a25b3ac6aa5c39"},
+    {file = "pyproject_pre_commit-0.0.1.tar.gz", hash = "sha256:1f885aa3fd03ed92d442ec6852db08bf11073c07a217fdf360394cd1aedd8ecf"},
+]
+
+[package.dependencies]
+autoflake = "2.0.0"
+autopep8 = "2.0.1"
+bandit = {version = "1.7.4", extras = ["toml"]}
+black = "22.12.0"
+blacken-docs = "1.13.0"
+flake8-annotations-complexity = "0.0.7"
+flake8-bugbear = "23.1.20"
+flake8-builtins = "2.1.0"
+flake8-comprehensions = "3.10.1"
+flake8-debugger = "4.1.2"
+flake8-docstrings = "1.7.0"
+flake8-executable = "2.1.3"
+flake8-pep3101 = ">=2.0.0,<3.0.0"
+flake8-print = "5.0.0"
+flake8-pyproject = "1.2.2"
+flake8-rst-docstrings = "0.3.0"
+flake8-string-format = "0.3.0"
+isort = "5.12.0"
+mdformat = "0.7.16"
+mdformat-footnote = "0.1.1"
+mdformat-frontmatter = "0.4.1"
+mdformat-gfm = "0.3.5"
+mypy = "0.991"
+pep8-naming = "0.13.3"
+pre-commit = "2.21.0"
+pre-commit-hooks = "4.4.0"
+pycodestyle = "2.10.0"
+shellcheck-py = "0.9.0.2"
 
 [[package]]
 name = "pytest"
@@ -1257,14 +1299,14 @@ files = [
 
 [[package]]
 name = "setuptools"
-version = "67.0.0"
+version = "67.1.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "setuptools-67.0.0-py3-none-any.whl", hash = "sha256:9d790961ba6219e9ff7d9557622d2fe136816a264dd01d5997cfc057d804853d"},
-    {file = "setuptools-67.0.0.tar.gz", hash = "sha256:883131c5b6efa70b9101c7ef30b2b7b780a4283d5fc1616383cdf22c83cbefe6"},
+    {file = "setuptools-67.1.0-py3-none-any.whl", hash = "sha256:a7687c12b444eaac951ea87a9627c4f904ac757e7abdc5aac32833234af90378"},
+    {file = "setuptools-67.1.0.tar.gz", hash = "sha256:e261cdf010c11a41cb5cb5f1bf3338a7433832029f559a6a7614bd42a967c300"},
 ]
 
 [package.extras]
@@ -1400,4 +1442,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "a2aef43788e5becee23400f9031a6c600bbb9ed64f8bcc3277749f2a4de095dc"
+content-hash = "1f1c2dfc59f89af63fcb6f7265b2d2c780c41a9b92452a629188c9d62d279a7c"
