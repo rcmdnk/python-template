@@ -158,8 +158,8 @@ sedi "s/python-template/$repo_name/" pyproject.toml
 sedi "s/python_template/$repo_name_underscore/" pyproject.toml
 sedi "s/python = \">=3.10,<3.11\"/python = \">=3.$py_min,<3.$((py_max+1))\"/" pyproject.toml
 
-sedi "s/yyyy/$year/" LICENSE
-sedi "s/name of copyright owner/@${user}/" LICENSE
+sedi "s/\[yyyy\]/$year/" LICENSE
+sedi "s/\[name of copyright owner\]/@${user}/" LICENSE
 
 mv "src/python_template" "src/$repo_name_underscore"
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
