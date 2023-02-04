@@ -11,7 +11,7 @@ email=$(git config --get user.email)
 
 year=$(date +%Y)
 repo_url=$(git remote get-url origin)
-repo_name=$(basename "$repo_url")
+repo_name=$(basename -s .git "$repo_url")
 repo_user=$(basename "$(dirname "$repo_url)")")
 repo_name_underscore=${repo_name//-/_}
 
