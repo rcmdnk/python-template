@@ -52,7 +52,7 @@ fi
 cat << EOF > README.md
 # $repo_name
 
-[![test](https://github.com/$repo_user/$repo_name/actions/workflows/dispatch.yml/badge.svg)](https://github.com/$repo_user/$repo_name/actions/workflows/dispatch.yml)
+[![test](https://github.com/$repo_user/$repo_name/actions/workflows/test.yml/badge.svg)](https://github.com/$repo_user/$repo_name/actions/workflows/test.yml)
 [![test coverage](https://img.shields.io/badge/coverage-check%20here-blue.svg)](https://github.com/$repo_user/$repo_name/tree/coverage)
 
 ...

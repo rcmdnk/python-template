@@ -1,5 +1,5 @@
 ---
-name: test
+name: dispatch
 
 on:
   pull_request:
