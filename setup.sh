@@ -15,10 +15,12 @@ repo_name=$(basename -s .git "$repo_url")
 repo_user=$(basename "$(dirname "$repo_url)")")
 repo_name_underscore=${repo_name//-/_}
 
+py_list=""
 py_max=0
 py_min=100
 py_vers=""
 for p in ${py_ver//,/ };do
+  py_list="${py_list}          - \"$p\"\n"
   if [ -n "$py_vers" ];then
     py_vers="${py_vers}, "
   fi
@@ -32,6 +34,10 @@ for p in ${py_ver//,/ };do
   fi
 done
 
+os_list=""
+for o in ${os//,/ };do
+  os_list="${os_list}          - \"$o\"\n"
+done
 
 if [[ "$(sed --version 2>/dev/null)" == "GNU" ]];then
   function sedi {
@@ -46,7 +52,7 @@ fi
 cat << EOF > README.md
 # $repo_name
 
-[![test](https://github.com/$repo_user/$repo_name/actions/workflows/test.yml/badge.svg)](https://github.com/$repo_user/$repo_name/actions/workflows/test.yml)
+[![test](https://github.com/$repo_user/$repo_name/actions/workflows/dispatch.yml/badge.svg)](https://github.com/$repo_user/$repo_name/actions/workflows/dispatch.yml)
 [![test coverage](https://img.shields.io/badge/coverage-check%20here-blue.svg)](https://github.com/$repo_user/$repo_name/tree/coverage)
 
 ...
@@ -164,10 +170,12 @@ sedi "s/\[name of copyright owner\]/@${user}/" LICENSE
 mv "src/python_template" "src/$repo_name_underscore"
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 
-sedi "s/python-version: \[\"3.10\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
-sedi "s/test \"\${{ matrix.python-version }}\" == \"3.10\"/test \"\${{ matrix.python-version }}\" == \"$py_main\"/" .github/workflows/test.yml
-sedi "s/os: \[ubuntu-latest\]/os: \[$os\]/" .github/workflows/test.yml
-sedi "s/test \"\${{ matrix.os }}\" == \"ubuntu-latest\"/test \"\${{ matrix.os }}\" == \"$os_main\"/" .github/workflows/test.yml
+sedi "s/default: \"3.10\"/default: \"$py_main\"/" .github/workflows/dispatch.yml
+sedi "s/          - \"3.10\"/$py_list/" .github/workflows/dispatch.yml
+sedi "s/python-version: \[\"3.10\"\]/python-version: \[$py_vers\]/" .github/workflows/dispatch.yml
+sedi "s/default: \"ubuntu-latest\"/default: \"$os_main\"/" .github/workflows/dispatch.yml
+sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/dispatch.yml
+sedi "s/os: \[ubuntu-latest\]/os: \[$os\]/" .github/workflows/dispatch.yml
 
 if [ "$cli" = "yes" ];then
   cat << EOF >> pyproject.toml

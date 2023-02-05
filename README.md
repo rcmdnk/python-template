@@ -4,7 +4,7 @@ Template for python project using poetry. abc.
 
 This **README.md** will be overwritten by **setup.sh**.
 
-[![test](https://github.com/rcmdnk/python-template/actions/workflows/test.yml/badge.svg)](https://github.com/rcmdnk/python-template/actions/workflows/test.yml)
+[![test](https://github.com/rcmdnk/python-template/actions/workflows/dispatch.yml/badge.svg)](https://github.com/rcmdnk/python-template/actions/workflows/dispatch.yml)
 [![test coverage](https://img.shields.io/badge/coverage-check%20here-blue.svg)](https://github.com/rcmdnk/python-template/tree/coverage)
 
 ## Repository initialization
