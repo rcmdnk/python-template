@@ -3,6 +3,12 @@ name = "python-template"
 version = "0.0.1"
 description = ""
 authors = ["USER <EMAIL>"]
+repository = "https://github.com/rcmdnk/python-template"
+homepage = "https://github.com/rcmdnk/python-template"
+readme = "README.md"
+license = ""
+keywords = []
+classifiers = []
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.11"

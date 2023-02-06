@@ -158,6 +158,7 @@ You can see the test status as a badge in the README.
 If you want to update dependencies automatically, [install Renovate into your repository](https://docs.renovatebot.com/getting-started/installing-onboarding/).
 EOF
 
+sedi "s|rcmdnk/python-template|$repo_user/$repo_name|" pyproject.toml
 sedi "s/USER/$user/" pyproject.toml
 sedi "s/EMAIL/$email/" pyproject.toml
 sedi "s/python-template/$repo_name/" pyproject.toml
