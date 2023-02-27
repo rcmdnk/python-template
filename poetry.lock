@@ -21,14 +21,14 @@ tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy
 
 [[package]]
 name = "autoflake"
-version = "2.0.0"
+version = "2.0.1"
 description = "Removes unused imports and unused variables"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "autoflake-2.0.0-py3-none-any.whl", hash = "sha256:d58ed4187c6b4f623a942b9a90c43ff84bf6a266f3682f407b42ca52073c9678"},
-    {file = "autoflake-2.0.0.tar.gz", hash = "sha256:7185b596e70d8970c6d4106c112ef41921e472bd26abf3613db99eca88cc8c2a"},
+    {file = "autoflake-2.0.1-py3-none-any.whl", hash = "sha256:143b0843667734af53532c443e950c787316b9b1155b2273558260b44836e8e4"},
+    {file = "autoflake-2.0.1.tar.gz", hash = "sha256:1ce520131b7f396915242fe91e57221f4d42408529bbe3ae93adafed286591e0"},
 ]
 
 [package.dependencies]
@@ -335,14 +335,14 @@ flake8 = "*"
 
 [[package]]
 name = "flake8-bugbear"
-version = "23.1.20"
+version = "23.2.13"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "flake8-bugbear-23.1.20.tar.gz", hash = "sha256:55902ab5a48c5ea53d8689ecd146eda548e72f2724192b9c1d68f6d975d13c06"},
-    {file = "flake8_bugbear-23.1.20-py3-none-any.whl", hash = "sha256:04a115e5f9c8e87c38bdbbcdf9f58223ffe05469c07c9a7bd8633330bc4d078b"},
+    {file = "flake8-bugbear-23.2.13.tar.gz", hash = "sha256:39259814a83f33c8409417ee12dd4050c9c0bb4c8707c12fc18ae62b2f3ddee1"},
+    {file = "flake8_bugbear-23.2.13-py3-none-any.whl", hash = "sha256:f136bd0ca2684f101168bba2310dec541e11aa6b252260c17dcf58d18069a740"},
 ]
 
 [package.dependencies]
@@ -959,22 +959,6 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
-name = "pre-commit-hooks"
-version = "4.4.0"
-description = "Some out-of-the-box hooks for pre-commit."
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "pre_commit_hooks-4.4.0-py2.py3-none-any.whl", hash = "sha256:fc8837335476221ccccda3d176ed6ae29fe58753ce7e8b7863f5d0f987328fc6"},
-    {file = "pre_commit_hooks-4.4.0.tar.gz", hash = "sha256:7011eed8e1a25cde94693da009cba76392194cecc2f3f06c51a44ea6ad6c2af9"},
-]
-
-[package.dependencies]
-"ruamel.yaml" = ">=0.15"
-tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
-
-[[package]]
 name = "py-cpuinfo"
 version = "9.0.0"
 description = "Get CPU info with pure Python"
@@ -1045,24 +1029,24 @@ plugins = ["importlib-metadata"]
 
 [[package]]
 name = "pyproject-pre-commit"
-version = "0.0.1"
-description = ""
+version = "0.0.5"
+description = "pre-commit hooks for python projects using pyproject.toml."
 category = "dev"
 optional = false
-python-versions = ">=3.9,<3.12"
+python-versions = ">=3.8.1,<3.12"
 files = [
-    {file = "pyproject_pre_commit-0.0.1-py3-none-any.whl", hash = "sha256:0fc23dce3b31f6fa8686613aa357d979aafdd990984927ae33a25b3ac6aa5c39"},
-    {file = "pyproject_pre_commit-0.0.1.tar.gz", hash = "sha256:1f885aa3fd03ed92d442ec6852db08bf11073c07a217fdf360394cd1aedd8ecf"},
+    {file = "pyproject_pre_commit-0.0.5-py3-none-any.whl", hash = "sha256:95918a9e0594cbf72f8421d716eaf37835b0b719121e5f53b68276e90482a8f3"},
+    {file = "pyproject_pre_commit-0.0.5.tar.gz", hash = "sha256:f4132d37166740279f7db9b8acf391e9b795d97d46e1a4c55a5f1c0c704304a0"},
 ]
 
 [package.dependencies]
-autoflake = "2.0.0"
+autoflake = "2.0.1"
 autopep8 = "2.0.1"
 bandit = {version = "1.7.4", extras = ["toml"]}
 black = "22.12.0"
 blacken-docs = "1.13.0"
 flake8-annotations-complexity = "0.0.7"
-flake8-bugbear = "23.1.20"
+flake8-bugbear = "23.2.13"
 flake8-builtins = "2.1.0"
 flake8-comprehensions = "3.10.1"
 flake8-debugger = "4.1.2"
@@ -1081,7 +1065,6 @@ mdformat-gfm = "0.3.5"
 mypy = "0.991"
 pep8-naming = "0.13.3"
 pre-commit = "2.21.0"
-pre-commit-hooks = "4.4.0"
 pycodestyle = "2.10.0"
 shellcheck-py = "0.9.0.2"
 
@@ -1442,4 +1425,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "1f1c2dfc59f89af63fcb6f7265b2d2c780c41a9b92452a629188c9d62d279a7c"
+content-hash = "3b7b647f7e1928b8046ad3bfe318e2da4f57cf7978f0b06c711828e2782f861f"
