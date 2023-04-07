@@ -171,12 +171,14 @@ sedi "s/\[name of copyright owner\]/@${user}/" LICENSE
 mv "src/python_template" "src/$repo_name_underscore"
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 
-sedi "s/default: \"3.10\"/default: \"$py_main\"/" .github/workflows/dispatch.yml
-sedi "s/          - \"3.10\"/$py_list/" .github/workflows/dispatch.yml
-sedi "s/python-version: \[\"3.10\"\]/python-version: \[$py_vers\]/" .github/workflows/dispatch.yml
-sedi "s/default: \"ubuntu-latest\"/default: \"$os_main\"/" .github/workflows/dispatch.yml
-sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/dispatch.yml
-sedi "s/os: \[ubuntu-latest\]/os: \[$os\]/" .github/workflows/dispatch.yml
+sedi "s/default: \"3.10\"/default: \"$py_main\"/" .github/workflows/test.yml
+sedi "s/          - \"3.10\"/$py_list/" .github/workflows/test.yml
+sedi "s/inputs.main_py_ver || '3.10'/inputs.main_py_ver || '$py_main'/" .github/workflows/test.yml
+sedi "s/python-version: \[\"3.10\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
+sedi "s/default: \"ubuntu-latest\"/default: \"$os_main\"/" .github/workflows/test.yml
+sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/test.yml
+sedi "s/inputs.main_os || 'ubuntu-latest'/inputs.main_os || '$os_main'/" .github/workflows/test.yml
+sedi "s/os: \[ubuntu-latest\]/os: \[$os\]/" .github/workflows/test.yml
 
 if [ "$cli" = "yes" ];then
   cat << EOF >> pyproject.toml
