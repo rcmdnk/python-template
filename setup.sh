@@ -39,15 +39,13 @@ for o in ${os//,/ };do
   os_list="${os_list}          - \"$o\"\n"
 done
 
-if [[ "$(sed --version 2>/dev/null)" == "GNU" ]];then
-  function sedi {
-    sed -i"" "$@"
-  }
-else
-  function sedi {
-    sed -i "" "$@"
-  }
-fi
+function sedi {
+  local tmpfile=$(mktemp)
+  local cmd="$1"
+  local file="$2"
+  sed "$cmd" "$file" > "$tmpfile"
+  mv "$tmpfile" "$file"
+}
 
 cat << EOF > README.md
 # $repo_name
