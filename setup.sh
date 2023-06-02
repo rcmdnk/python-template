@@ -40,7 +40,8 @@ for o in ${os//,/ };do
 done
 
 function sedi {
-  local tmpfile=$(mktemp)
+  local tmpfile
+  tmpfile=$(mktemp)
   local cmd="$1"
   local file="$2"
   sed "$cmd" "$file" > "$tmpfile"
@@ -158,7 +159,7 @@ EOF
 
 sedi "s|rcmdnk/python-template|$repo_user/$repo_name|" pyproject.toml
 sedi "s/USER/$user/" pyproject.toml
-sedi "s/EMAIL/$email/" pyproject.toml
+sedi "s/EMAIL@example.com/$email/" pyproject.toml
 sedi "s/python-template/$repo_name/" pyproject.toml
 sedi "s/python_template/$repo_name_underscore/" pyproject.toml
 sedi "s/python = \">=3.10,<3.11\"/python = \">=3.$py_min,<3.$((py_max+1))\"/" pyproject.toml
