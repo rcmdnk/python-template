@@ -161,8 +161,6 @@ sedi "s|rcmdnk/python-template|$repo_user/$repo_name|" pyproject.toml
 if [ -n "$user" ] && [ -n "$email" ];then
   sedi "s/USER/$user/" pyproject.toml
   sedi "s/EMAIL@example.com/$email/" pyproject.toml
-else
-  sedi "/^authors/d" pyproject.toml
 fi
 sedi "s/python-template/$repo_name/" pyproject.toml
 sedi "s/python_template/$repo_name_underscore/" pyproject.toml
