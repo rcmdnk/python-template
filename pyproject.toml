@@ -17,7 +17,7 @@ python = ">=3.10,<3.11"
 tomli = { version = "2.0.1", python = "<3.11"}
 pytest = "7.3.1"
 pytest-cov = "4.1.0"
-pytest-xdist = "3.2.1"
+pytest-xdist = "3.3.1"
 pytest-benchmark = "4.0.0"
 pyproject-pre-commit = "0.0.13"
 
