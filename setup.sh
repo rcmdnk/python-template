@@ -204,7 +204,7 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 EOF
-  cat << EOF >> "src/$repo_name_underscore/__init__.py"
+  cat << EOF > "src/$repo_name_underscore/__init__.py"
 from .__version__ import __version__
 from .${repo_name_underscore} import main
 
