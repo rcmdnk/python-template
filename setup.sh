@@ -205,10 +205,10 @@ if __name__ == "__main__":
     main()
 EOF
   cat << EOF >> "src/$repo_name_underscore/__init__.py"
-__program__ = "$repo_name"
+from .__version__ import __version__
 from .${repo_name_underscore} import main
 
-__all__ = ["main"]
+__all__ = ["__version__", "main"]
 EOF
   cat << EOF > "tests/test_${repo_name_underscore}.py"
 import sys
