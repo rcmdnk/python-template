@@ -70,6 +70,8 @@ cat << EOF > README.md
 ...
 EOF
 
+sedi "s|REPO_URL|$repo_url|" DEVELOPMENT.md
+
 sedi "s|rcmdnk/python-template|$repo_user/$repo_name|" pyproject.toml
 if [ -n "$user" ] && [ -n "$email" ];then
   sedi "s/USER/$user/" pyproject.toml
