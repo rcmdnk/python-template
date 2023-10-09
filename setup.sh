@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-py_ver="3.10" # "3.10, 3.9, 3.8", need quotes for each version in the quote.
+py_ver="3.12,3.11,3.10"
 py_main=${py_ver%%,*}
 os="ubuntu-latest" # "ubuntu-latest, macos-latest, windows-latest"
 os_main=${os%%,*}
