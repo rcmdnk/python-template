@@ -79,7 +79,7 @@ if [ -n "$user" ] && [ -n "$email" ];then
 fi
 sedi "s/python-template/$repo_name/" pyproject.toml
 sedi "s/python_template/$repo_name_underscore/" pyproject.toml
-sedi "s/python = \">=3.10,<3.11\"/python = \">=3.$py_min,<3.$((py_max+1))\"/" pyproject.toml
+sedi "s/^python = .*$/python = \">=3.$py_min,<3.$((py_max+1))\"/" pyproject.toml
 
 sedi "s/\[yyyy\]/$year/" LICENSE
 sedi "s/\[name of copyright owner\]/@${user}/" LICENSE
@@ -87,10 +87,10 @@ sedi "s/\[name of copyright owner\]/@${user}/" LICENSE
 mv "src/python_template" "src/$repo_name_underscore"
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 
-sedi "s/default: \"3.10\"/default: \"$py_main\"/" .github/workflows/test.yml
-sedi "s/          - \"3.10\"/$py_list/" .github/workflows/test.yml
-sedi "s/inputs.main_py_ver || '3.10'/inputs.main_py_ver || '$py_main'/" .github/workflows/test.yml
-sedi "s/python-version: \[\"3.10\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
+sedi "s/default: \"3.*\"/default: \"$py_main\"/" .github/workflows/test.yml
+sedi "s/          - \"3.*\"/$py_list/" .github/workflows/test.yml
+sedi "s/inputs.main_py_ver || '3.*'/inputs.main_py_ver || '$py_main'/" .github/workflows/test.yml
+sedi "s/python-version: \[\"3.*\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
 sedi "s/default: \"ubuntu-latest\"/default: \"$os_main\"/" .github/workflows/test.yml
 sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/test.yml
 sedi "s/inputs.main_os || 'ubuntu-latest'/inputs.main_os || '$os_main'/" .github/workflows/test.yml
