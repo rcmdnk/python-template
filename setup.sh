@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+template_version=v0.0.2
 py_ver="3.12,3.11,3.10"
 py_main=${py_ver%%,*}
 os="ubuntu-latest" # "ubuntu-latest, macos-latest, windows-latest"
@@ -68,6 +69,8 @@ cat << EOF > README.md
 ## Usage
 
 ...
+
+Based on [rcmdnk/python-template](https://github.com/rcmdnk/python-template), $template_version
 EOF
 
 sedi "s|REPO_URL|$repo_url|" DEVELOPMENT.md
