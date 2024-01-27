@@ -26,8 +26,10 @@ jobs:
           fetch-depth: 0
       - name: setup
         run: |
+          version=$(grep ^version pyproject.toml)
           sed -i "s/cli=\"no\"/cli=\"${{ matrix.cli }}\"/" setup.sh
           ./setup.sh
+          sed -i "s/^version.*/$version/" pyproject.toml
       - uses: actions/setup-python@v5
         with:
           python-version: ${{matrix.python-version}}
