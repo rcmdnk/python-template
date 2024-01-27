@@ -81,6 +81,7 @@ if [ -n "$user" ] && [ -n "$email" ];then
   sedi "s/EMAIL@example.com/$email/" pyproject.toml
 fi
 sedi "s/python-template/$repo_name/" pyproject.toml
+sedi "s/^version.*/version = \"0.0.1\"/" pyproject.toml
 sedi "s/python_template/$repo_name_underscore/" pyproject.toml
 sedi "s/^python = .*$/python = \">=3.$py_min,<3.$((py_max+1))\"/" pyproject.toml
 
