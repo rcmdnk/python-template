@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-template_version=v0.0.2
+template_version=v$(grep "^version" pyproject.toml|cut -d '=' -f2|tr -d '"'|tr -d ' ')
 py_ver="3.12,3.11,3.10"
 py_main=${py_ver%%,*}
 os="ubuntu-latest" # "ubuntu-latest, macos-latest, windows-latest"
