@@ -204,7 +204,7 @@ EOF
 } > DEVELOPMENT.md
 # }}}
 
-# pyproject.toml
+# pyproject.toml {{{
 {
   if [ -n "$user" ] && [ -n "$email" ];then
     if [ "$PROJECT_MANAGER" = "uv" ];then
@@ -488,6 +488,12 @@ def test_main(argv, out, capsys):
     captured = capsys.readouterr()
     assert captured.out == out
 EOF
+fi
+# }}}
+
+# tests {{{
+if [ "$PROJECT_MANAGER" = "poetry" ];then
+  sedi "[\"uv\"]/[\"tool\"][\"poetry\"]" tests/test_version.py
 fi
 # }}}
 

@@ -15,8 +15,9 @@ jobs:
   template_test:
     strategy:
       matrix:
+        project_manager: ["uv", "poetry"]
         os: [ubuntu-latest]
-        python-version: ["3.10"]
+        python-version: ["3.12"]
         cli: ["no", "yes"]
     runs-on: ${{ matrix.os }}
     steps:
@@ -27,24 +28,29 @@ jobs:
       - name: setup
         run: |
           version=$(grep ^version pyproject.toml)
-          sed -i "s/cli=\"no\"/cli=\"${{ matrix.cli }}\"/" setup.sh
+          sed -i "s/PROJECT_MANAGER=\"uv\"/PROJECT_MANAGER=\"${{ matrix.project_manager }}\"/" setup.sh
+          sed -i "s/CLI=\"no\"/CLI=\"${{ matrix.cli }}\"/" setup.sh
           ./setup.sh
           sed -i "s/^version.*/$version/" pyproject.toml
       - uses: actions/setup-python@v5
         with:
           python-version: ${{matrix.python-version}}
-      - name: Install uv
-        run: pip install uv
+      - name: Install project manager
+        run: pip install ${{ matrix.project_manager }}
       - name: uv setup
+        if: matrix.project_manager == 'uv'
         run: uv sync
+      - name: poetry setup
+        if: matrix.project_manager == 'poetry'
+        run: poetry install
       - name: Run test
         id: pytest
         continue-on-error: true
-        run: uv run pytest --durations=0 --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=src  tests/ | tee pytest-coverage.txt
+        run: ${{matrix.python-version}} run pytest --durations=0 --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=src  tests/ | tee pytest-coverage.txt
       - name: pre-commit
         id: preCommit
         continue-on-error: true
-        run: uv run pre-commit run -a
+        run: ${{matrix.python-version}} run pre-commit run -a
       - name: Pytest coverage comment
         id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
