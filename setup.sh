@@ -495,7 +495,7 @@ fi
 
 # tests {{{
 if [ "$PROJECT_MANAGER" = "poetry" ];then
-  sedi "\[\"project\"\]/\[\"tool\"\]\[\"poetry\"\]" tests/test_version.py
+  sedi "\[\"project\"\]/\[\"tool\"\]\[\"poetry\"\]/" tests/test_version.py
 fi
 # }}}
 
