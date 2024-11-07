@@ -14,7 +14,7 @@ def test_version():
         import tomli as tomllib
 
     with open(Path(__file__).parents[1] / "pyproject.toml", "rb") as f:
-        version = tomllib.load(f)["uv"]["version"]
+        version = tomllib.load(f)["project"]["version"]
     assert version == __version__
 
 
