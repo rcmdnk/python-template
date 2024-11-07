@@ -23,11 +23,24 @@ fi
 template_version=v$(grep "^version" pyproject.toml|cut -d '=' -f2|tr -d '"'|tr -d ' ')
 user=$(git config --get user.name)
 email=$(git config --get user.email)
+if [ -z "$user" ];then
+  user=user
+fi
+if [ -z "$email" ];then
+  email="email@example.com"
+fi
 
 year=$(date +%Y)
-repo_url=$(git remote get-url origin)
-repo_name=$(basename -s .git "$repo_url")
-repo_user=$(basename "$(dirname "$repo_url)")")
+
+if type git >/dev/null 2>&1;then
+  repo_url=$(git remote get-url origin)
+  repo_name=$(basename -s .git "$repo_url")
+  repo_user=$(basename "$(dirname "$repo_url)")")
+else
+  repo_url=""
+  repo_name=$(pwd | xargs basename)
+  repo_user=$user
+fi
 repo_name_underscore=${repo_name//-/_}
 
 py_list=""
