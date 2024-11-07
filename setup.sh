@@ -437,7 +437,9 @@ sedi "s/@rcmdnk/@${user}/" LICENSE
 # }}}
 
 # src {{{
-mv "src/python_template" "src/$repo_name_underscore"
+if [ "$repo_name_underscore" != "python_template" ];then
+  mv "src/python_template" "src/$repo_name_underscore"
+fi
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 if [ "$CLI" = "yes" ];then
   cat << EOF > "src/$repo_name_underscore/${repo_name_underscore}.py"
