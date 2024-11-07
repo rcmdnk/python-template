@@ -245,7 +245,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "tomli >= 2.0.1; python_version '<3.11'",
+  "tomli >= 2.0.1; python_version < '3.11'",
   "pytest >= 8.0.0",
   "pytest-cov >= 5.0.0",
   "pytest-xdist >= 3.3.1",
