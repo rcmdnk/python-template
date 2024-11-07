@@ -440,7 +440,6 @@ sedi "s/@rcmdnk/@${user}/" LICENSE
 if [ "$repo_name_underscore" != "python_template" ];then
   mv "src/python_template" "src/$repo_name_underscore"
 fi
-sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 if [ "$CLI" = "yes" ];then
   cat << EOF > "src/$repo_name_underscore/${repo_name_underscore}.py"
 import sys
@@ -465,6 +464,15 @@ from .${repo_name_underscore} import main
 
 __all__ = ["__version__", "main"]
 EOF
+fi
+# }}}
+
+# tests {{{
+sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
+if [ "$PROJECT_MANAGER" = "poetry" ];then
+  sedi "s/\[\"project\"\]/\[\"tool\"\]\[\"poetry\"\]/" tests/test_version.py
+fi
+if [ "$CLI" = "yes" ];then
   cat << EOF > "tests/test_${repo_name_underscore}.py"
 import sys
 
@@ -490,12 +498,6 @@ def test_main(argv, out, capsys):
     captured = capsys.readouterr()
     assert captured.out == out
 EOF
-fi
-# }}}
-
-# tests {{{
-if [ "$PROJECT_MANAGER" = "poetry" ];then
-  sedi "\[\"project\"\]/\[\"tool\"\]\[\"poetry\"\]/" tests/test_version.py
 fi
 # }}}
 
