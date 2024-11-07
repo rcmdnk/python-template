@@ -1,12 +1,26 @@
 #!/usr/bin/env bash
 
-template_version=v$(grep "^version" pyproject.toml|cut -d '=' -f2|tr -d '"'|tr -d ' ')
-py_ver="3.12,3.11,3.10"
-py_main=${py_ver%%,*}
-os="ubuntu-latest" # "ubuntu-latest, macos-latest, windows-latest"
-os_main=${os%%,*}
-cli="no" # "yes" or "no"
 
+PROJECT_MANAGER="uv" # "uv" or "poetry"
+PY_VER="3.13,3.12,3.11,3.10" # comma separated python versions
+PY_MAIN=${PY_VER%%,*}
+OS="ubuntu-latest,macos-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
+OS_MAIN=${OS%%,*}
+CLI="no" # "yes" or "no"
+CHECKERS="ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy
+
+if [ "$PROJECT_MANAGER" != "uv" ] && [ "$PROJECT_MANAGER" != "poetry" ];then
+  echo "Wrong PROJECT_MANAGER: $PROJECT_MANAGER, should be 'uv' or 'poetry'" 1>&2
+  exit 1
+fi
+
+if [ "$PROJECT_MANAGER" = "uv" ];then
+  manager_url="[uv](https://docs.astral.sh/uv/)"
+else
+  manager_url="[Poetry](https://python-poetry.org/)"
+fi
+
+template_version=v$(grep "^version" pyproject.toml|cut -d '=' -f2|tr -d '"'|tr -d ' ')
 user=$(git config --get user.name)
 email=$(git config --get user.email)
 
@@ -20,7 +34,7 @@ py_list=""
 py_max=0
 py_min=100
 py_vers=""
-for p in ${py_ver//,/ };do
+for p in ${PY_VER//,/ };do
   py_list="${py_list}          - \"$p\"\n"
   if [ -n "$py_vers" ];then
     py_vers="${py_vers}, "
@@ -36,7 +50,7 @@ for p in ${py_ver//,/ };do
 done
 
 os_list=""
-for o in ${os//,/ };do
+for o in ${OS//,/ };do
   os_list="${os_list}          - \"$o\"\n"
 done
 
@@ -49,7 +63,9 @@ function sedi {
   mv "$tmpfile" "$file"
 }
 
-cat << EOF > README.md
+# README.md {{{
+{
+  cat << EOF
 # $repo_name
 
 [![test](https://github.com/$repo_user/$repo_name/actions/workflows/test.yml/badge.svg)](https://github.com/$repo_user/$repo_name/actions/workflows/test.yml)
@@ -60,7 +76,7 @@ cat << EOF > README.md
 ## Requirement
 
 - Python ${py_vers//\"/}
-- Poetry (For development)
+- $manager_url
 
 ## Installation
 
@@ -72,40 +88,358 @@ cat << EOF > README.md
 
 Based on [rcmdnk/python-template](https://github.com/rcmdnk/python-template), $template_version
 EOF
+} > README.md
+# }}}
 
-sedi "s|REPO_URL|$repo_url|" DEVELOPMENT.md
+# DEVELOPMENT.md {{{
+{
 
-sedi "s|rcmdnk/python-template|$repo_user/$repo_name|" pyproject.toml
-if [ -n "$user" ] && [ -n "$email" ];then
-  sedi "s/USER/$user/" pyproject.toml
-  sedi "s/EMAIL@example.com/$email/" pyproject.toml
-fi
-sedi "s/python-template/$repo_name/" pyproject.toml
-sedi "s/^version.*/version = \"0.0.1\"/" pyproject.toml
-sedi "s/python_template/$repo_name_underscore/" pyproject.toml
-sedi "s/^python = .*$/python = \">=3.$py_min,<3.$((py_max+1))\"/" pyproject.toml
+  cat << EOF
+# Development"
 
-sedi "s/\[yyyy\]/$year/" LICENSE
-sedi "s/\[name of copyright owner\]/@${user}/" LICENSE
+## $PROJECT_MANAGER
 
-mv "src/python_template" "src/$repo_name_underscore"
-sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
+Use $manager_url to setup environment.
 
-sedi "s/default: \"3.*\"/default: \"$py_main\"/" .github/workflows/test.yml
-sedi "s/          - \"3.*\"/$py_list/" .github/workflows/test.yml
-sedi "s/inputs.main_py_ver || '3.*'/inputs.main_py_ver || '$py_main'/" .github/workflows/test.yml
-sedi "s/python-version: \[\"3.*\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
-sedi "s/default: \"ubuntu-latest\"/default: \"$os_main\"/" .github/workflows/test.yml
-sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/test.yml
-sedi "s/inputs.main_os || 'ubuntu-latest'/inputs.main_os || '$os_main'/" .github/workflows/test.yml
-sedi "s/os: \[ubuntu-latest\]/os: \[$os\]/" .github/workflows/test.yml
+To install $PROJECT_MANAGER, run:
 
-if [ "$cli" = "yes" ];then
-  cat << EOF >> pyproject.toml
+\`\`\`
+$ pip install $PROJECT_MANAGER
+\`\`\`
+
+Setup $PROJECT_MANAGER environment:
+EOF
+
+  if [ "$PROJECT_MANAGER" = "uv" ];then
+    cat << EOF
+
+\`\`\`
+$ uv sync
+\`\`\`
+
+To enter the environment:
+
+\`\`\`
+$ source .venv/bin/activate
+\`\`\`
+EOF
+  else
+    cat << EOF
+
+\`\`\`
+$ poetry install
+\`\`\`
+
+Then enter the environment:
+
+\`\`\`
+$ poetry shell
+\`\`\`
+EOF
+  fi
+
+  cat << EOF
+
+## pre-commit
+
+To check codes at the commit, use [pre-commit](https://pre-commit.com/).
+
+\`pre-commit\` command will be installed in the $PROJECT_MANAGER  environment.
+
+First, run:
+
+\`\`\`
+$ pre-commit install
+\`\`\`
+
+Then \`pre-commit\` will be run at the commit.
+
+Sometimes, you may want to skip the check. In that case, run:
+
+\`\`\`
+$ git commit --no-verify
+\`\`\`
+
+You can run \`pre-commit\` on entire repository manually:
+
+\`\`\`
+$ pre-commit run -a
+\`\`\`
+
+## pytest
+
+Tests are written with [pytest](https://docs.pytest.org/).
+
+Write tests in **/tests** directory.
+
+To run tests, run:
+
+\`\`\`
+$ pytest
+\`\`\`
+
+The default setting runs tests in parallel with \`-n auto\`.
+If you run tests in serial, run:
+
+\`\`\`
+$ pytest -n 0
+\`\`\`
+
+## GitHub Actions
+
+If you push a repository to GitHub, GitHub Actions will run a test job
+by [GitHub Actions](https://github.co.jp/features/actions).
+
+The job runs at the Pull Request, too.
+
+It checks codes with \`pre-commit\` and runs tests with \`pytest\`.
+It also makes a test coverage report and uploads it to [the coverage branch]($repo_url/tree/coverage).
+
+You can see the test status as a badge in the README.
+
+## Renovate
+
+If you want to update dependencies automatically, [install Renovate into your repository](https://docs.renovatebot.com/getting-started/installing-onboarding/).
+EOF
+} > DEVELOPMENT.md
+# }}}
+
+# pyproject.toml
+{
+  if [ -n "$user" ] && [ -n "$email" ];then
+    if [ "$PROJECT_MANAGER" = "uv" ];then
+      authors="authors = [ { name = \"$user\", email = \"$email\" } ]
+"
+    else
+      authors="authors = [\"$user <$email>\"]
+"
+    fi
+  fi
+
+  if [ "$PROJECT_MANAGER" = "uv" ];then
+    echo "[project]"
+  else
+    echo "[tool.poetry]"
+  fi
+    cat << EOF
+name = "$repo_name"
+version = "0.1.0"
+description = ""
+${authors}repository = "$repo_url"
+homepage = "$repo_url"
+readme = "README.md"
+license = "apache-2.0"
+keywords = []
+classifiers = []
+EOF
+
+  if [ "$PROJECT_MANAGER" = "uv" ];then
+    if echo "$CHECKERS" | grep -q ruff;then
+      pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.3.0"
+    else
+      pyproject_pre_commit="pyproject-pre-commit >= 0.3.0"
+    fi
+    cat << EOF
+requires-python = ">=3.$py_min,<3.$((py_max+1))"
+dependencies = []
+
+[dev-dependencies]
+dev = [
+  "tomli >= 2.0.1; python_version '<3.11'",
+  "pytest >= 8.0.0",
+  "pytest-cov >= 5.0.0",
+  "pytest-xdist >= 3.3.1",
+  "pytest-benchmark >= 4.0.0",
+  "$pyproject_pre_commit",
+  "gitpython >= 3.1.41",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+EOF
+    if [ "$CLI" = "yes" ];then
+      cat << EOF
+
+[project.scripts]
+$repo_name = "$repo_name_underscore:main"
+EOF
+    fi
+  else
+    if echo "$CHECKERS" | grep -q ruff;then
+      pyproject_pre_commit='pyproject-pre-commit = { version = ">=0.3.0", extras = ["ruff"]}'
+    else
+      pyproject_pre_commit='pyproject-pre-commit = ">=0.3.0"'
+    fi
+    cat << EOF
+
+[tool.poetry.dependencies]
+python = ">=3.$py_min,<3.$((py_max+1))"
+
+[tool.poetry.group.dev.dependencies]
+tomli = { version = ">=2.0.1", python = "<3.11"}
+pytest = ">=8.0.0"
+pytest-cov = ">=5.0.0"
+pytest-xdist = ">=3.3.1"
+pytest-benchmark = ">=4.0.0"
+$pyproject_pre_commit
+gitpython = ">=3.1.41"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+EOF
+    if [ "$CLI" = "yes" ];then
+      cat << EOF
 
 [tool.poetry.scripts]
 $repo_name = "$repo_name_underscore:main"
 EOF
+    fi
+  fi
+
+  if echo "$CHECKERS" | grep -q ruff;then
+    cat << EOF
+
+[tool.pytest.ini_options]
+addopts = "-n auto"
+testpaths = ["tests",]
+
+[tool.ruff]
+line-length = 79
+# quote-style = "single"
+
+[tool.ruff.lint]
+# select = ["ALL"]
+# select = ["E4", "E7", "E9", "F"]  # default, black compatible
+select = [  # similar options to black, flake8 + plugins, isort etc...)
+  #"E4",  # Import (comparable to black)
+  #"E7",  # Indentation (comparable to black)
+  #"E9",  # Blank line (comparable to black)
+  "F",   # String (comparable to black)
+  "I",   # Import order (comparable to isort)
+  "S",   # flake8-bandit (comparable to bandit)
+  "B",   # flake8-bugbear
+  "A",   # flake8-builtins
+  "C4",   # flake8-comprehensions
+  "T10",  # flake8-debugger
+  "EXE",  # flake8-executable
+  "T20", # flake8-print
+  "N", # pep8-naming
+  "E", # pycodestyle
+  "W", # pycodestyle
+  "C90", # mccabe
+]
+
+ignore = [
+ "E203", # Not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
+ "E501", # Line too long. Disable it to allow long lines of comments and print lines which black allows.
+# "E704", # NOT in ruff. multiple statements on one line (def). This is inconsistent with black >= 24.1.1 (see ttps://github.com/psf/black/pull/3796)
+# "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
+ "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
+ "D401", # First line should be in imperative mood
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.format]
+docstring-code-format = true
+EOF
+  fi
+
+  if echo "$CHECKERS" | grep -q black;then
+    cat << EOF
+
+[tool.black]
+line-length = 79
+EOF
+  fi
+
+  if echo "$CHECKERS" | grep -q autoflake;then
+    cat << EOF
+
+[tool.autoflake]
+remove-all-unused-imports = true
+expand-star-imports = true
+remove-duplicate-keys = true
+remove-unused-variables = true
+EOF
+  fi
+
+  if echo "$CHECKERS" | grep -q autopep8;then
+    cat << EOF
+
+[tool.autopep8]
+ignore = "E203,E501,W503"
+recursive = true
+aggressive = 3
+EOF
+  fi
+
+  if echo "$CHECKERS" | grep -q isort;then
+    cat << EOF
+
+[tool.isort]
+profile = "black"
+line_length = 79
+EOF
+
+  fi
+
+  if echo "$CHECKERS" | grep -q flake8;then
+    cat << EOF
+
+[tool.flake8]
+# E203 is not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
+# E501: Line too long. Disable it to allow long lines of comments and print lines which black allows.
+# W503 is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
+# D100~D106: Missing docstrings other than class (D101)
+# D401: First line should be in imperative mood
+ignore = "E203,E501,W503,D100,D102,D103,D104,D105,D106,D401"
+max-complexity = 10
+docstring-convention = "numpy"
+EOF
+
+  fi
+
+  if echo "$CHECKERS" | grep -q bandit;then
+    cat << EOF
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+EOF
+
+  fi
+
+  if echo "$CHECKERS" | grep -q mypy;then
+    cat << EOF
+
+[tool.mypy]
+files = ["src/**/*.py"]
+strict = true
+warn_return_any = false
+ignore_missing_imports = true
+scripts_are_modules = true
+install_types = true
+non_interactive = true
+EOF
+  fi
+} > pyproject.toml
+# }}}
+
+# LICENSE {{{
+sedi "s/2023/$year/" LICENSE
+sedi "s/@rcmdnk/@${user}/" LICENSE
+# }}}
+
+# src {{{
+mv "src/python_template" "src/$repo_name_underscore"
+sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
+if [ "$CLI" = "yes" ];then
   cat << EOF > "src/$repo_name_underscore/${repo_name_underscore}.py"
 import sys
 
@@ -155,5 +489,18 @@ def test_main(argv, out, capsys):
     assert captured.out == out
 EOF
 fi
+# }}}
 
-rm -f setup.sh poetry.lock .github/workflows/template_test.yml .github/FUNDING.yml
+# .github/workflows/test.yml {{{
+sedi "s/default: \"3.*\"/default: \"$PY_MAIN\"/" .github/workflows/test.yml
+sedi "s/          - \"3.*\"/$py_list/" .github/workflows/test.yml
+sedi "s/inputs.main_py_ver || '3.*'/inputs.main_py_ver || '$PY_MAIN'/" .github/workflows/test.yml
+sedi "s/python-version: \[\"3.*\"\]/python-version: \[$py_vers\]/" .github/workflows/test.yml
+sedi "s/default: \"ubuntu-latest\"/default: \"$OS_MAIN\"/" .github/workflows/test.yml
+sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/test.yml
+sedi "s/inputs.main_os || 'ubuntu-latest'/inputs.main_os || '$OS_MAIN'/" .github/workflows/test.yml
+sedi "s/os: \[ubuntu-latest\]/os: \[$OS\]/" .github/workflows/test.yml
+sedi "s/setup-type: 'uv'/setup-type: '$PROJECT_MANAGER'" .github/workflows/test.yml
+# }}}
+
+rm -f setup.sh uv.lock .github/workflows/template_test.yml .github/FUNDING.yml
