@@ -243,7 +243,7 @@ EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
 dependencies = []
 
-[dev-dependencies]
+[dependency-groups]
 dev = [
   "tomli >= 2.0.1; python_version '<3.11'",
   "pytest >= 8.0.0",
@@ -592,7 +592,7 @@ sedi "s/default: \"ubuntu-latest\"/default: \"$OS_MAIN\"/" .github/workflows/tes
 sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/test.yml
 sedi "s/inputs.main_os || 'ubuntu-latest'/inputs.main_os || '$OS_MAIN'/" .github/workflows/test.yml
 sedi "s/os: \[ubuntu-latest\]/os: \[$OS\]/" .github/workflows/test.yml
-sedi "s/setup-type: 'uv'/setup-type: '$PROJECT_MANAGER'" .github/workflows/test.yml
+sedi "s/setup-type: 'uv'/setup-type: '$PROJECT_MANAGER'/" .github/workflows/test.yml
 # }}}
 
 rm -f setup.sh uv.lock .github/workflows/template_test.yml .github/FUNDING.yml
