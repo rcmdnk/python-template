@@ -497,6 +497,90 @@ if [ "$PROJECT_MANAGER" = "poetry" ];then
 fi
 # }}}
 
+# pre-commit {{{
+{
+  cat << EOF
+repos:
+- repo: https://github.com/rcmdnk/pyproject-pre-commit
+  rev: v0.3.0
+  hooks:
+EOF
+  if echo "$CHECKERS" | grep -q ruff;then
+    cat << EOF
+    - id: ruff-lint-diff
+    - id: ruff-lint
+    - id: ruff-format-diff
+    - id: ruff-format
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q black;then
+    cat << EOF
+    - id: black-diff
+    - id: black
+    - id: blacken-docs
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q autoflake;then
+    cat << EOF
+    - id: autoflake-diff
+    - id: autoflake
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q autopep8;then
+    cat << EOF
+    - id: autopep8-diff
+    - id: autopep8
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q isort;then
+    cat << EOF
+    - id: isort-diff
+    - id: isort
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q flake8;then
+    cat << EOF
+    - id: flake8
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q bandit;then
+    cat << EOF
+    - id: bandit
+EOF
+  fi
+  if echo "$CHECKERS" | grep -q mypy;then
+    cat << EOF
+    - id: mypy
+EOF
+  fi
+  cat << EOF
+  - id: shellcheck
+  - id: mdformat-check
+  - id: mdformat
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+    - id: check-byte-order-marker
+    - id: check-yaml
+    - id: check-json
+    - id: check-toml
+    - id: check-case-conflict
+    - id: check-merge-conflict
+      args:
+        - "--assume-in-merge"
+    - id: end-of-file-fixer
+    - id: fix-byte-order-marker
+    - id: mixed-line-ending
+    - id: trailing-whitespace
+    - id: debug-statements
+    - id: detect-private-key
+    - id: detect-aws-credentials
+      args:
+        - "--allow-missing-credentials"
+EOF
+}  > .pre-commit-config.yaml
+# }}}
+
 # .github/workflows/test.yml {{{
 sedi "s/default: \"3.*\"/default: \"$PY_MAIN\"/" .github/workflows/test.yml
 sedi "s/          - \"3.*\"/$py_list/" .github/workflows/test.yml
