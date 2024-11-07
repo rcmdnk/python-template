@@ -11,15 +11,17 @@ This **README.md** will be overwritten by **setup.sh**.
 
 Modify the repository info in **setup.sh** if necessary:
 
-| Value     | Explanation                                                                                                                           | Default                       |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------- |
-| `py_ver`  | Python version. Multiple versions can be set as comma separated value like "3.10,3.9,3.8".                                            | "3.10"                        |
-| `py_main` | Main python version used by GitHub Actions.                                                                                           | The first version in `py_ver` |
-| `os`      | OS on which GitHub Actions job runs. Multiple OS can be set as comma separated value like "ubuntu-latest,macos-latest,windows-latest" | "ubuntu-latest"               |
-| `os_main` | Main OS used by GitHub Actions.                                                                                                       | The first OS in `os`          |
-| `user`    | User name in **pyproject.toml** and **LICCENSE**.                                                                                     | `git config --get user.name`  |
-| `email`   | Email address in **pyproject.toml**.                                                                                                  | `git config --get user.email` |
-| `cli`     | Set `yes` to create a template for command line interface.                                                                            | "no"                          |
+| Value             | Explanation                                                                                                                           | Default                       |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------- |
+| `PROJECT_MANAGER` | Python project manager. [uv](https://docs.astral.sh/uv/) or [Poetry](https://python-poetry.org/).                                     | "uv"                          |
+| `PY_VER`          | Python version. Multiple versions can be set as comma separated value like "3.10,3.9,3.8".                                            | "3.13,3.12,3.11,3.10"         |
+| `PY_MAIN`         | Main python version used by GitHub Actions.                                                                                           | The first version in `PY_VER` |
+| `OS`              | OS on which GitHub Actions job runs. Multiple OS can be set as comma separated value like "ubuntu-latest,macos-latest,windows-latest" | "ubuntu-latest"               |
+| `OS_MAIN`         | Main OS used by GitHub Actions.                                                                                                       | The first OS in `OS`          |
+| `CHECKERS`        | Comma separated linter and formatter list.  Any of ruff, black, autoflake, autopep8, isort, flake8, bandit, mypy.                     | "ruff,mypy"                   |
+| `CLI`             | Set `yes` to create a template for command line interface.                                                                            | "no"                          |
+| `USER`            | User name in **pyproject.toml** and **LICCENSE**.                                                                                     | `git config --get user.name`  |
+| `EMAIL`           | Email address in **pyproject.toml**.                                                                                                  | `git config --get user.email` |
 
 Run `setup.sh`.
 
@@ -27,9 +29,10 @@ Run `setup.sh`.
 
 The repository has following features:
 
-- Environment management with [Poetry](https://python-poetry.org/).
+- Environment management with [uv](https://docs.astral.sh/uv/) or [Poetry](https://python-poetry.org/).
 - Code check/lint with [pre-commit](https://pre-commit.com/).
   - For Python
+    - [ruff](https://docs.astral.sh/ruff/)
     - [Black](https://black.readthedocs.io/en/stable/)
     - [Flake8](https://flake8.pycqa.org/en/latest/) (actually, [pyproject-flake8](https://pypi.org/project/pyproject-flake8/) is used to read options from pyproject.toml)
     - [isort](https://pycqa.github.io/isort/)

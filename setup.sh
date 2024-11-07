@@ -4,10 +4,12 @@
 PROJECT_MANAGER="uv" # "uv" or "poetry"
 PY_VER="3.13,3.12,3.11,3.10" # comma separated python versions
 PY_MAIN=${PY_VER%%,*}
-OS="ubuntu-latest,macos-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
+OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
 CHECKERS="ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy
+USER=""
+EMAIL=""
 
 if [ "$PROJECT_MANAGER" != "uv" ] && [ "$PROJECT_MANAGER" != "poetry" ];then
   echo "Wrong PROJECT_MANAGER: $PROJECT_MANAGER, should be 'uv' or 'poetry'" 1>&2
@@ -21,8 +23,28 @@ else
 fi
 
 template_version=v$(grep "^version" pyproject.toml|cut -d '=' -f2|tr -d '"'|tr -d ' ')
-user=$(git config --get user.name)
-email=$(git config --get user.email)
+
+year=$(date +%Y)
+
+user="$USER"
+email="$EMAIL"
+
+if type git >/dev/null 2>&1;then
+  repo_url=$(git remote get-url origin)
+  repo_name=$(basename -s .git "$repo_url")
+  repo_user=$(basename "$(dirname "$repo_url)")")
+  if [ -z "$user" ];then
+    user=$(git config --get user.name)
+  fi
+  if [ -z "$email" ];then
+    email=$(git config --get user.email)
+  fi
+else
+  repo_url=""
+  repo_name=$(pwd | xargs basename)
+  repo_user=$user
+fi
+
 if [ -z "$user" ];then
   user=user
 fi
@@ -30,17 +52,6 @@ if [ -z "$email" ];then
   email="email@example.com"
 fi
 
-year=$(date +%Y)
-
-if type git >/dev/null 2>&1;then
-  repo_url=$(git remote get-url origin)
-  repo_name=$(basename -s .git "$repo_url")
-  repo_user=$(basename "$(dirname "$repo_url)")")
-else
-  repo_url=""
-  repo_name=$(pwd | xargs basename)
-  repo_user=$user
-fi
 repo_name_underscore=${repo_name//-/_}
 
 py_list=""
