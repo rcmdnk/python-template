@@ -558,9 +558,9 @@ EOF
 EOF
   fi
   cat << EOF
-  - id: shellcheck
-  - id: mdformat-check
-  - id: mdformat
+    - id: shellcheck
+    - id: mdformat-check
+    - id: mdformat
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
