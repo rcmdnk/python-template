@@ -44,7 +44,7 @@ jobs:
       - name: pre-commit
         id: preCommit
         continue-on-error: true
-        run: poetry run pre-commit run -a
+        run: uv run pre-commit run -a
       - name: Pytest coverage comment
         id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
