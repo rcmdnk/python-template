@@ -206,14 +206,10 @@ EOF
 
 # pyproject.toml {{{
 {
-  if [ -n "$user" ] && [ -n "$email" ];then
-    if [ "$PROJECT_MANAGER" = "uv" ];then
-      authors="authors = [ { name = \"$user\", email = \"$email\" } ]
-"
-    else
-      authors="authors = [\"$user <$email>\"]
-"
-    fi
+  if [ "$PROJECT_MANAGER" = "uv" ];then
+    authors="authors = [ { name = \"$user\", email = \"$email\" } ]"
+  else
+    authors="authors = [\"$user <$email>\"]"
   fi
 
   if [ "$PROJECT_MANAGER" = "uv" ];then
@@ -225,7 +221,8 @@ EOF
 name = "$repo_name"
 version = "0.1.0"
 description = ""
-${authors}repository = "$repo_url"
+${authors}
+repository = "$repo_url"
 homepage = "$repo_url"
 readme = "README.md"
 license = "apache-2.0"
