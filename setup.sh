@@ -328,7 +328,6 @@ testpaths = ["tests",]
 
 [tool.ruff]
 line-length = 79
-# quote-style = "single"
 
 [tool.ruff.lint]
 # select = ["ALL"]
@@ -368,6 +367,7 @@ ignore = [
 max-complexity = 10
 
 [tool.ruff.format]
+# quote-style = "single"
 docstring-code-format = true
 EOF
   fi
