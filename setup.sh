@@ -366,6 +366,9 @@ ignore = [
 [tool.ruff.lint.mccabe]
 max-complexity = 10
 
+[tool.ruff.lint.flake8-quotes]
+# inline-quotes = "single"
+
 [tool.ruff.format]
 # quote-style = "single"
 docstring-code-format = true
