@@ -7,7 +7,7 @@ PY_MAIN=${PY_VER%%,*}
 OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
-CHECKERS="ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy
+CHECKERS="ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
 USER=""
 EMAIL=""
 
@@ -447,6 +447,23 @@ ignore_missing_imports = true
 scripts_are_modules = true
 install_types = true
 non_interactive = true
+EOF
+  fi
+
+  if echo "$CHECKERS" | grep -q numpydoc;then
+    cat << EOF
+
+[tool.numpydoc_validation]
+checks = [
+    "all",   # report on all checks, except the below
+    "EX01",  # "No examples section found"
+    "ES01",  # "No extended summary found"
+    "SA01",  # "See Also section not found"
+    "GL08",  # "The object does not have a docstring"
+    "PR01",  # "Parameters {missing_params} not documented"
+    "PR02",  # "Unknown parameters {unknown_params}"
+    "RT01",  # "No Returns section found"
+]
 EOF
   fi
 } > pyproject.toml
