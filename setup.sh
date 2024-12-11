@@ -352,12 +352,12 @@ select = [  # similar options to black, flake8 + plugins, isort etc...)
 ]
 
 ignore = [
- "E203", # Not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
- "E501", # Line too long. Disable it to allow long lines of comments and print lines which black allows.
-# "E704", # NOT in ruff. multiple statements on one line (def). This is inconsistent with black >= 24.1.1 (see ttps://github.com/psf/black/pull/3796)
-# "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
- "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
- "D401", # First line should be in imperative mood
+  "E203", # Not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
+  "E501", # Line too long. Disable it to allow long lines of comments and print lines which black allows.
+#  "E704", # NOT in ruff. multiple statements on one line (def). This is inconsistent with black >= 24.1.1 (see ttps://github.com/psf/black/pull/3796)
+#  "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
+  "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
+  "D401", # First line should be in imperative mood
 ]
 
 [tool.ruff.lint.per-file-ignores]
