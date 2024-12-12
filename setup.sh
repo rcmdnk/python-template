@@ -7,7 +7,7 @@ PY_MAIN=${PY_VER%%,*}
 OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
-CHECKERS="ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
+CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
 USER=""
 EMAIL=""
 

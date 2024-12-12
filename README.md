@@ -18,7 +18,7 @@ Modify the repository info in **setup.sh** if necessary:
 | `PY_MAIN`         | Main python version used by GitHub Actions.                                                                                           | The first version in `PY_VER` |
 | `OS`              | OS on which GitHub Actions job runs. Multiple OS can be set as comma separated value like "ubuntu-latest,macos-latest,windows-latest" | "ubuntu-latest"               |
 | `OS_MAIN`         | Main OS used by GitHub Actions.                                                                                                       | The first OS in `OS`          |
-| `CHECKERS`        | Comma separated linter and formatter list.  Any of ruff, black, autoflake, autopep8, isort, flake8, bandit, mypy.                     | "ruff,mypy"                   |
+| `CHECKERS`        | Comma separated linter and formatter list. Any of ruff, black, autoflake, autopep8, isort, flake8, bandit, mypy.                      | "ruff,mypy,numpydoc"          |
 | `CLI`             | Set `yes` to create a template for command line interface.                                                                            | "no"                          |
 | `USER`            | User name in **pyproject.toml** and **LICCENSE**.                                                                                     | `git config --get user.name`  |
 | `EMAIL`           | Email address in **pyproject.toml**.                                                                                                  | `git config --get user.email` |
@@ -37,6 +37,7 @@ The repository has following features:
     - [Flake8](https://flake8.pycqa.org/en/latest/) (actually, [pyproject-flake8](https://pypi.org/project/pyproject-flake8/) is used to read options from pyproject.toml)
     - [isort](https://pycqa.github.io/isort/)
     - [mypy](https://www.mypy-lang.org/)
+    - [numpydoc](https://numpydoc.readthedocs.io/en/latest/)
   - For shell script
     - [ShellCheck](https://www.shellcheck.net/)
   - For Markdown
