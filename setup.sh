@@ -168,7 +168,7 @@ EOF
 
 To check codes at the commit, use [pre-commit](https://pre-commit.com/).
 
-\`pre-commit\` command will be installed in the $PROJECT_MANAGER  environment.
+\`pre-commit\` command will be installed in the $PROJECT_MANAGER environment.
 
 First, run:
 
