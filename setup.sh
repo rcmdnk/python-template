@@ -598,6 +598,11 @@ EOF
     - id: mypy
 EOF
   fi
+  if echo "$CHECKERS" | grep -q numpydoc;then
+    cat << EOF
+    - id: numpydoc-validation
+EOF
+  fi
   cat << EOF
     - id: shellcheck
     - id: mdformat-check
