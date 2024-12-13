@@ -358,6 +358,9 @@ ignore = [
 #  "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
   "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
   "D401", # First line should be in imperative mood
+  "D211", # \`one-blank-line-before-class\` (D203) and \`no-blank-line-before-class\` (D211) are incompatible. Ignoring \`one-blank-line-before-class\`.
+  "D213", # \`multi-line-summary-first-line\` (D212) and \`multi-line-summary-second-line\` (D213) are incompatible. Ignoring \`multi-line-summary-second-line\`.
+  "COM812", "D203", "ISC001", # The following rules may cause conflicts when used with the formatter: \`COM812\`, \`D203\`, \`ISC001\`. To avoid unexpected behavior, we recommend disabling these rules, either by removing them from the \`select\` or \`extend-select\` configuration, or adding them to the \`ignore\` configuration.
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -607,6 +610,7 @@ EOF
     - id: shellcheck
     - id: mdformat-check
     - id: mdformat
+    - id: validate-pyproject
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
