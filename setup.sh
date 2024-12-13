@@ -557,7 +557,7 @@ fi
   cat << EOF
 repos:
 - repo: https://github.com/rcmdnk/pyproject-pre-commit
-  rev: v0.3.0
+  rev: v0.3.4
   hooks:
 EOF
   if echo "$CHECKERS" | grep -q ruff;then
