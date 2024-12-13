@@ -31,6 +31,8 @@ email="$EMAIL"
 
 if type git >/dev/null 2>&1;then
   repo_url=$(git remote get-url origin)
+  repo_url=${repo_url//git@github.com:/https:\/\/github.com\/}
+
   repo_name=$(basename -s .git "$repo_url")
   repo_user=$(basename "$(dirname "$repo_url)")")
   if [ -z "$user" ];then
@@ -246,14 +248,11 @@ name = "$repo_name"
 version = "0.1.0"
 description = ""
 ${authors}
-repository = "$repo_url"
-homepage = "$repo_url"
 readme = "README.md"
 license = "apache-2.0"
 keywords = []
 classifiers = []
 EOF
-
   if [ "$PROJECT_MANAGER" = "uv" ];then
     if echo "$CHECKERS" | grep -q ruff;then
       pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.3.0"
@@ -275,6 +274,10 @@ dev = [
   "gitpython >= 3.1.41",
 ]
 
+[project.urls]
+Repository = "$repo_url"
+Homepage = "$repo_url"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -293,6 +296,8 @@ EOF
       pyproject_pre_commit='pyproject-pre-commit = ">=0.3.0"'
     fi
     cat << EOF
+repository = "$repo_url"
+homepage = "$repo_url"
 
 [tool.poetry.dependencies]
 python = ">=3.$py_min,<3.$((py_max+1))"
@@ -358,6 +363,8 @@ ignore = [
 #  "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
   "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
   "D401", # First line should be in imperative mood
+  "FBT001", # Boolean-typed positional argument in function definition
+  "FBT002", # Boolean default positional argument in function definition
   "D211", # \`one-blank-line-before-class\` (D203) and \`no-blank-line-before-class\` (D211) are incompatible. Ignoring \`one-blank-line-before-class\`.
   "D213", # \`multi-line-summary-first-line\` (D212) and \`multi-line-summary-second-line\` (D213) are incompatible. Ignoring \`multi-line-summary-second-line\`.
   "COM812", "D203", "ISC001", # The following rules may cause conflicts when used with the formatter: \`COM812\`, \`D203\`, \`ISC001\`. To avoid unexpected behavior, we recommend disabling these rules, either by removing them from the \`select\` or \`extend-select\` configuration, or adding them to the \`ignore\` configuration.
