@@ -368,6 +368,7 @@ ignore = [
   "D211", # \`one-blank-line-before-class\` (D203) and \`no-blank-line-before-class\` (D211) are incompatible. Ignoring \`one-blank-line-before-class\`.
   "D213", # \`multi-line-summary-first-line\` (D212) and \`multi-line-summary-second-line\` (D213) are incompatible. Ignoring \`multi-line-summary-second-line\`.
   "COM812", "D203", "ISC001", # The following rules may cause conflicts when used with the formatter: \`COM812\`, \`D203\`, \`ISC001\`. To avoid unexpected behavior, we recommend disabling these rules, either by removing them from the \`select\` or \`extend-select\` configuration, or adding them to the \`ignore\` configuration.
+  "B905", # [*] \`zip()\` without an explicit \`strict=\` parameter
 ]
 
 [tool.ruff.lint.per-file-ignores]

@@ -66,6 +66,7 @@ ignore = [
 # "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
  "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
  "D401", # First line should be in imperative mood
+ "B905", # [*] `zip()` without an explicit `strict=` parameter
 ]
 
 [tool.ruff.lint.per-file-ignores]
