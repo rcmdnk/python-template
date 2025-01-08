@@ -255,9 +255,9 @@ classifiers = []
 EOF
   if [ "$PROJECT_MANAGER" = "uv" ];then
     if echo "$CHECKERS" | grep -q ruff;then
-      pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.3.0"
+      pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.3.5"
     else
-      pyproject_pre_commit="pyproject-pre-commit >= 0.3.0"
+      pyproject_pre_commit="pyproject-pre-commit >= 0.3.5"
     fi
     cat << EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
