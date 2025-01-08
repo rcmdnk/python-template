@@ -32,6 +32,7 @@ email="$EMAIL"
 if type git >/dev/null 2>&1;then
   repo_url=$(git remote get-url origin)
   repo_url=${repo_url//git@github.com:/https:\/\/github.com\/}
+  repo_url=${repo_url//ssh:\/\/git@github.com/https:\/\/github.com}
 
   repo_name=$(basename -s .git "$repo_url")
   repo_user=$(basename "$(dirname "$repo_url)")")
