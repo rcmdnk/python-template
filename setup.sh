@@ -273,6 +273,11 @@ dev = [
   "pytest-benchmark >= 4.0.0",
   "$pyproject_pre_commit",
   "gitpython >= 3.1.41",
+  "types-pymysql>=1.1.0.20241103",
+  "types-pyyaml>=6.0.12.20240917",
+  "types-decorator>=5.1.8.20240310",
+  "types-redis>=4.6.0.20241004",
+  "types-six>=1.16.21.20241105",
 ]
 
 [project.urls]
@@ -370,6 +375,8 @@ ignore = [
   "D213", # \`multi-line-summary-first-line\` (D212) and \`multi-line-summary-second-line\` (D213) are incompatible. Ignoring \`multi-line-summary-second-line\`.
   "COM812", "D203", "ISC001", # The following rules may cause conflicts when used with the formatter: \`COM812\`, \`D203\`, \`ISC001\`. To avoid unexpected behavior, we recommend disabling these rules, either by removing them from the \`select\` or \`extend-select\` configuration, or adding them to the \`ignore\` configuration.
   "B905", # [*] \`zip()\` without an explicit \`strict=\` parameter
+  "PD901", # Avoid using the generic variable name \`df\` for DataFrames
+  "TID252", # Prefer absolute imports over relative imports from parent modules
 ]
 
 [tool.ruff.lint.per-file-ignores]
