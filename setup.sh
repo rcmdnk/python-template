@@ -103,7 +103,6 @@ function sedi {
 ## Requirement
 
 - Python ${py_vers//\"/}
-- $manager_url
 
 ## Installation
 
