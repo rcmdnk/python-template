@@ -10,6 +10,9 @@ CLI="no" # "yes" or "no"
 CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
 USER=""
 EMAIL=""
+PRE_COMMIT_PYPROJECT_OTHERS=1
+PRE_COMMIT_HOOKS=1
+PRE_COMMIT_ACTIONLINT=1
 
 if [ "$PROJECT_MANAGER" != "uv" ] && [ "$PROJECT_MANAGER" != "poetry" ];then
   echo "Wrong PROJECT_MANAGER: $PROJECT_MANAGER, should be 'uv' or 'poetry'" 1>&2
@@ -625,11 +628,16 @@ EOF
     - id: numpydoc-validation
 EOF
   fi
-  cat << EOF
+  if [ "$PRE_COMMIT_PYPROJECT_OTHERS" -eq 1 ];then
+    cat << EOF
     - id: shellcheck
     - id: mdformat-check
     - id: mdformat
     - id: validate-pyproject
+EOF
+  fi
+  if [ "$PRE_COMMIT_HOOKS" -eq 1 ];then
+     cat <<EOF
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
@@ -651,6 +659,15 @@ EOF
       args:
         - "--allow-missing-credentials"
 EOF
+  fi
+   if [ "$PRE_COMMIT_ACTIONLINT" -eq 1 ];then
+     cat <<EOF
+- repo: https://github.com/rhysd/actionlint
+  rev: v1.7.7
+  hooks:
+    - id: actionlint
+EOF
+  fi
 }  > .pre-commit-config.yaml
 # }}}
 
