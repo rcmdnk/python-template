@@ -287,8 +287,8 @@ Repository = "$repo_url"
 Homepage = "$repo_url"
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.7.19,<0.8.0"]
+build-backend = "uv_build"
 EOF
     if [ "$CLI" = "yes" ];then
       cat << EOF
