@@ -343,41 +343,19 @@ testpaths = ["tests",]
 line-length = 79
 
 [tool.ruff.lint]
-# select = ["ALL"]
-# select = ["E4", "E7", "E9", "F"]  # default, black compatible
-select = [  # similar options to black, flake8 + plugins, isort etc...)
-    #"E4",  # Import (comparable to black)
-    #"E7",  # Indentation (comparable to black)
-    #"E9",  # Blank line (comparable to black)
-    "F",   # String (comparable to black)
-    "I",   # Import order (comparable to isort)
-    "S",   # flake8-bandit (comparable to bandit)
-    "B",   # flake8-bugbear
-    "A",   # flake8-builtins
-    "C4",   # flake8-comprehensions
-    "T10",  # flake8-debugger
-    "EXE",  # flake8-executable
-    "T20", # flake8-print
-    "N", # pep8-naming
-    "E", # pycodestyle
-    "W", # pycodestyle
-    "C90", # mccabe
-]
+select = ["ALL"]
 
 ignore = [
     "E203", # Not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
     "E501", # Line too long. Disable it to allow long lines of comments and print lines which black allows.
-#    "E704", # NOT in ruff. multiple statements on one line (def). This is inconsistent with black >= 24.1.1 (see ttps://github.com/psf/black/pull/3796)
-#    "W503", # NOT in ruff. is the counter part of W504, which follows current PEP8: [Line break occurred before a binary operator (W503)](https://www.flake8rules.com/rules/W503.html)
-    "D100", "D102", "D103", "D104", "D105", "D106", # Missing docstrings other than class (D101)
+    "D100", "D102", "D103", "D104", "D105", "D106", "D107", # Missing docstrings other than class (D101)
     "D401", # First line should be in imperative mood
-    "FBT001", # Boolean-typed positional argument in function definition
-    "FBT002", # Boolean default positional argument in function definition
     "D211", # \`one-blank-line-before-class\` (D203) and \`no-blank-line-before-class\` (D211) are incompatible. Ignoring \`one-blank-line-before-class\`.
     "D213", # \`multi-line-summary-first-line\` (D212) and \`multi-line-summary-second-line\` (D213) are incompatible. Ignoring \`multi-line-summary-second-line\`.
     "COM812", "D203", "ISC001", # The following rules may cause conflicts when used with the formatter: \`COM812\`, \`D203\`, \`ISC001\`. To avoid unexpected behavior, we recommend disabling these rules, either by removing them from the \`select\` or \`extend-select\` configuration, or adding them to the \`ignore\` configuration.
-    "B905", # [*] \`zip()\` without an explicit \`strict=\` parameter
-    "PD901", # Avoid using the generic variable name \`df\` for DataFrames
+    "FBT001", # Boolean-typed positional argument in function definition
+    "FBT002", # Boolean default positional argument in function definition
+    "FBT003", # Boolean positional value in function call
     "TID252", # Prefer absolute imports over relative imports from parent modules
 ]
 
