@@ -3,8 +3,10 @@
 
 PROJECT_MANAGER="uv" # "uv" or "poetry"
 PY_VER="3.13,3.12,3.11,3.10" # comma separated python versions
+# shellcheck disable=SC2034
 PY_MAIN=${PY_VER%%,*}
 OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
+# shellcheck disable=SC2034
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
 CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
@@ -648,6 +650,37 @@ EOF
   fi
 }  > .pre-commit-config.yaml
 # }}}
+
+# .mise.toml {{{
+{
+  cat << EOF
+[env]
+_.python.venv = ".venv"
+
+[settings]
+experimental = true
+
+[settings.python]
+uv_venv_auto = true
+
+[hooks]
+enter = [
+EOF
+  if [ "$PROJECT_MANAGER" = "uv" ];then
+    cat << EOF
+  "[ -x \"$(git rev-parse --git-path hooks/pre-commit)\" ] || uv run pre-commit install >/dev/null"
+EOF
+  else
+    cat << EOF
+  "[ -x \"$(git rev-parse --git-path hooks/pre-commit)\" ] || poetry run pre-commit install >/dev/null"
+EOF
+  fi
+  cat << EOF
+]
+EOF
+} > .mise.toml
+# }}}
+
 
 # .github/workflows/test.yml {{{
 sedi "s/default: \"3.*\"/default: \"$PY_MAIN\"/" .github/workflows/test.yml
