@@ -660,9 +660,6 @@ _.python.venv = ".venv"
 [settings]
 experimental = true
 
-[settings.python]
-uv_venv_auto = true
-
 [hooks]
 enter = [
 EOF
