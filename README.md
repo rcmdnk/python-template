@@ -1,11 +1,11 @@
-commit: [26847fdc1d7d5511bf89eb9ba3453c1a90899f1f](https://github.com/rcmdnk/python-template/tree/26847fdc1d7d5511bf89eb9ba3453c1a90899f1f)
+commit: [c16ddc2fde33849221745310b25befe965ba18e4](https://github.com/rcmdnk/python-template/tree/c16ddc2fde33849221745310b25befe965ba18e4)
 
 condition: branch=main, os=ubuntu-latest, python_version=3.10
 
-[![test](https://github.com/rcmdnk/python-template/actions/workflows/test.yml/badge.svg)](https://github.com/rcmdnk/python-template/actions/runs/16560262975)
-<a href="https://github.com/rcmdnk/python-template/blob/26847fdc1d7d5511bf89eb9ba3453c1a90899f1f/README.md"><img alt="Coverage" src="https://img.shields.io/badge/Coverage-100%25-brightgreen.svg" /></a><details><summary>Coverage Report </summary><table><tr><th>File</th><th>Stmts</th><th>Miss</th><th>Cover</th></tr><tbody><tr><td><b>TOTAL</b></td><td><b>4</b></td><td><b>0</b></td><td><b>100%</b></td></tr></tbody></table></details>
+[![test](https://github.com/rcmdnk/python-template/actions/workflows/test.yml/badge.svg)](https://github.com/rcmdnk/python-template/actions/runs/16806505860)
+<a href="https://github.com/rcmdnk/python-template/blob/c16ddc2fde33849221745310b25befe965ba18e4/README.md"><img alt="Coverage" src="https://img.shields.io/badge/Coverage-78%25-yellow.svg" /></a><details><summary>Coverage Report </summary><table><tr><th>File</th><th>Stmts</th><th>Miss</th><th>Cover</th><th>Missing</th></tr><tbody><tr><td colspan="5"><b>src/python_template</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/rcmdnk/python-template/blob/c16ddc2fde33849221745310b25befe965ba18e4/src/python_template/__init__.py">\_\_init\_\_.py</a></td><td>7</td><td>2</td><td>71%</td><td><a href="https://github.com/rcmdnk/python-template/blob/c16ddc2fde33849221745310b25befe965ba18e4/src/python_template/__init__.py#L9-L10">9&ndash;10</a></td></tr><tr><td><b>TOTAL</b></td><td><b>9</b></td><td><b>2</b></td><td><b>78%</b></td><td>&nbsp;</td></tr></tbody></table></details>
 
 | Tests | Skipped | Failures | Errors | Time |
 | ----- | ------- | -------- | -------- | ------------------ |
-| 2 | 0 :zzz: | 0 :x: | 0 :fire: | 0.802s :stopwatch: |
+| 2 | 0 :zzz: | 0 :x: | 0 :fire: | 0.824s :stopwatch: |
 
