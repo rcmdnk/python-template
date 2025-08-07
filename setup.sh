@@ -126,7 +126,7 @@ EOF
 {
 
   cat << EOF
-# Development"
+# Development
 
 ## $PROJECT_MANAGER
 
@@ -272,9 +272,9 @@ dependencies = []
 dev = [
     "tomli >= 2.0.1; python_version < '3.11'",
     "pytest >= 8.0.0",
-    "pytest-cov >= 5.0.0",
+    "pytest-cov >= 6.0.0",
     "pytest-xdist >= 3.3.1",
-    "pytest-benchmark >= 4.0.0",
+    "pytest-benchmark >= 5.0.0",
     "$pyproject_pre_commit",
     "gitpython >= 3.1.41",
     "types-pymysql>=1.1.0.20241103",
@@ -289,7 +289,7 @@ Repository = "$repo_url"
 Homepage = "$repo_url"
 
 [build-system]
-requires = ["uv_build>=0.7.19,<0.8.0"]
+requires = ["uv_build>=0.8.0,<0.9.0"]
 build-backend = "uv_build"
 EOF
     if [ "$CLI" = "yes" ];then
