@@ -359,6 +359,7 @@ ignore = [
     "FBT002", # Boolean default positional argument in function definition
     "FBT003", # Boolean positional value in function call
     "TID252", # Prefer absolute imports over relative imports from parent modules
+    "PLC0415", # \`import\` should be at the top-level of a file
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -372,10 +373,10 @@ ignore = [
 max-complexity = 10
 
 [tool.ruff.lint.flake8-quotes]
-# inline-quotes = "single"
+inline-quotes = "single"
 
 [tool.ruff.format]
-# quote-style = "single"
+quote-style = "single"
 docstring-code-format = true
 EOF
   fi

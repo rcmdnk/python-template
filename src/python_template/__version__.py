@@ -1,3 +1,7 @@
-import importlib.metadata
+def __getattr__(name: str) -> str:
+    if name == '__version__':
+        import importlib.metadata
 
-__version__ = importlib.metadata.version(__package__ or __name__)
+        return importlib.metadata.version(__package__ or __name__)
+    msg = f'module {__name__} has no attribute {name}'
+    raise AttributeError(msg)

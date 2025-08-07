@@ -13,8 +13,8 @@ def test_version() -> None:
     except ModuleNotFoundError:
         import tomli as tomllib
 
-    with (Path(__file__).parents[1] / "pyproject.toml").open("rb") as f:
-        version = tomllib.load(f)["project"]["version"]
+    with (Path(__file__).parents[1] / 'pyproject.toml').open('rb') as f:
+        version = tomllib.load(f)['project']['version']
     assert version == __version__
 
 
@@ -22,8 +22,8 @@ def test_tag() -> None:
     try:
         repo = Repo(Path(__file__).parents[1])
     except InvalidGitRepositoryError:
-        pytest.skip("Not a git repo.")
-    tags = repo.git.tag(sort="creatordate").splitlines()
+        pytest.skip('Not a git repo.')
+    tags = repo.git.tag(sort='creatordate').splitlines()
     if len(tags) > 0:
         latest_tag = tags[-1]
-        assert latest_tag == "v" + __version__
+        assert latest_tag == 'v' + __version__
