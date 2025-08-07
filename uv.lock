@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10, <3.14"
 resolution-markers = [
     "python_full_version >= '3.11'",
@@ -836,7 +836,7 @@ wheels = [
 
 [[package]]
 name = "python-template"
-version = "0.1.7"
+version = "0.1.8"
 source = { editable = "." }
 
 [package.dev-dependencies]
