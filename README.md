@@ -1,11 +1,11 @@
-commit: [8a913dadcbd1d43940fc574468a1cac192eb74b3](https://github.com/rcmdnk/python-template/tree/8a913dadcbd1d43940fc574468a1cac192eb74b3)
+commit: [285e7f025e1f869649941457b2a3c15f47c8c534](https://github.com/rcmdnk/python-template/tree/285e7f025e1f869649941457b2a3c15f47c8c534)
 
 condition: branch=main, os=ubuntu-latest, python_version=3.10
 
-[![test](https://github.com/rcmdnk/python-template/actions/workflows/test.yml/badge.svg)](https://github.com/rcmdnk/python-template/actions/runs/16828322227)
-<a href="https://github.com/rcmdnk/python-template/blob/8a913dadcbd1d43940fc574468a1cac192eb74b3/README.md"><img alt="Coverage" src="https://img.shields.io/badge/Coverage-78%25-yellow.svg" /></a><details><summary>Coverage Report </summary><table><tr><th>File</th><th>Stmts</th><th>Miss</th><th>Cover</th><th>Missing</th></tr><tbody><tr><td colspan="5"><b>src/python_template</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/rcmdnk/python-template/blob/8a913dadcbd1d43940fc574468a1cac192eb74b3/src/python_template/__init__.py">\_\_init\_\_.py</a></td><td>7</td><td>2</td><td>71%</td><td><a href="https://github.com/rcmdnk/python-template/blob/8a913dadcbd1d43940fc574468a1cac192eb74b3/src/python_template/__init__.py#L9-L10">9&ndash;10</a></td></tr><tr><td><b>TOTAL</b></td><td><b>9</b></td><td><b>2</b></td><td><b>78%</b></td><td>&nbsp;</td></tr></tbody></table></details>
+[![test](https://github.com/rcmdnk/python-template/actions/workflows/test.yml/badge.svg)](https://github.com/rcmdnk/python-template/actions/runs/16828975299)
+<a href="https://github.com/rcmdnk/python-template/blob/285e7f025e1f869649941457b2a3c15f47c8c534/README.md"><img alt="Coverage" src="https://img.shields.io/badge/Coverage-78%25-yellow.svg" /></a><details><summary>Coverage Report </summary><table><tr><th>File</th><th>Stmts</th><th>Miss</th><th>Cover</th><th>Missing</th></tr><tbody><tr><td colspan="5"><b>src/python_template</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/rcmdnk/python-template/blob/285e7f025e1f869649941457b2a3c15f47c8c534/src/python_template/__init__.py">\_\_init\_\_.py</a></td><td>7</td><td>2</td><td>71%</td><td><a href="https://github.com/rcmdnk/python-template/blob/285e7f025e1f869649941457b2a3c15f47c8c534/src/python_template/__init__.py#L9-L10">9&ndash;10</a></td></tr><tr><td><b>TOTAL</b></td><td><b>9</b></td><td><b>2</b></td><td><b>78%</b></td><td>&nbsp;</td></tr></tbody></table></details>
 
 | Tests | Skipped | Failures | Errors | Time |
 | ----- | ------- | -------- | -------- | ------------------ |
-| 2 | 0 :zzz: | 0 :x: | 0 :fire: | 0.839s :stopwatch: |
+| 2 | 0 :zzz: | 0 :x: | 0 :fire: | 0.830s :stopwatch: |
 
