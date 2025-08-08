@@ -508,10 +508,18 @@ if __name__ == "__main__":
     main()
 EOF
   cat << EOF > "src/$repo_name_underscore/__init__.py"
-from .__version__ import __version__
 from .${repo_name_underscore} import main
 
 __all__ = ["__version__", "main"]
+
+
+def __getattr__(name: str) -> str:
+    if name == '__version__':
+        from .version import __version__
+
+        return __version__
+    msg = f'module {__name__} has no attribute {name}'
+    raise AttributeError(msg)
 EOF
 fi
 # }}}
@@ -519,7 +527,7 @@ fi
 # tests {{{
 sedi "s/python_template/$repo_name_underscore/" tests/test_version.py
 if [ "$PROJECT_MANAGER" = "poetry" ];then
-  sedi "s/\[\"project\"\]/\[\"tool\"\]\[\"poetry\"\]/" tests/test_version.py
+  sedi "s/\['project'\]/\['tool'\]\['poetry'\]/" tests/test_version.py
 fi
 if [ "$CLI" = "yes" ];then
   cat << EOF > "tests/test_${repo_name_underscore}.py"
