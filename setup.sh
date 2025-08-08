@@ -510,7 +510,7 @@ EOF
   cat << EOF > "src/$repo_name_underscore/__init__.py"
 from .${repo_name_underscore} import main
 
-__all__ = ["__version__", "main"]
+__all__ = ['__version__', 'main']
 
 
 def __getattr__(name: str) -> str:
