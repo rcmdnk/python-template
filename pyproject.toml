@@ -25,7 +25,9 @@ dev = [
 
 [project.urls]
 Repository = "https://github.com/rcmdnk/python-template"
+Documentation = "https://github.com/rcmdnk/python-template"
 Homepage = "https://github.com/rcmdnk/python-template"
+Issue = "https://github.com/rcmdnk/python-template/issues"
 
 [build-system]
 requires = ["uv_build>=0.8.0,<0.9.0"]

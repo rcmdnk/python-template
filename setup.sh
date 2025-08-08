@@ -286,7 +286,9 @@ dev = [
 
 [project.urls]
 Repository = "$repo_url"
+Documentation = "$repo_url"
 Homepage = "$repo_url"
+Issue = "$repo_url/issues"
 
 [build-system]
 requires = ["uv_build>=0.8.0,<0.9.0"]
