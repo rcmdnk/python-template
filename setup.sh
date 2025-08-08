@@ -604,6 +604,7 @@ EOF
   if echo "$CHECKERS" | grep -q mypy;then
     cat << EOF
     - id: mypy
+    #- id: dmypy
 EOF
   fi
   if echo "$CHECKERS" | grep -q numpydoc;then
