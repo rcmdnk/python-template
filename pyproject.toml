@@ -3,8 +3,6 @@ name = "python-template"
 version = "0.2.0"
 description = ""
 authors = [ { name = "rcmdnk", email = "rcmdnk@gmail.com" } ]
-repository = "https://github.com/rcmdnk/python-template"
-homepage = "https://github.com/rcmdnk/python-template"
 readme = "README.md"
 license = "Apache-2.0"
 keywords = []
