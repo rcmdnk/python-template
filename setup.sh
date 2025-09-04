@@ -260,9 +260,9 @@ classifiers = []
 EOF
   if [ "$PROJECT_MANAGER" = "uv" ];then
     if echo "$CHECKERS" | grep -q ruff;then
-      pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.3.5"
+      pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.4.2"
     else
-      pyproject_pre_commit="pyproject-pre-commit >= 0.3.5"
+      pyproject_pre_commit="pyproject-pre-commit >= 0.4.2"
     fi
     cat << EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
@@ -303,9 +303,9 @@ EOF
     fi
   else
     if echo "$CHECKERS" | grep -q ruff;then
-      pyproject_pre_commit='pyproject-pre-commit = { version = ">=0.3.0", extras = ["ruff"]}'
+      pyproject_pre_commit='pyproject-pre-commit = { version = ">=0.4.2", extras = ["ruff"]}'
     else
-      pyproject_pre_commit='pyproject-pre-commit = ">=0.3.0"'
+      pyproject_pre_commit='pyproject-pre-commit = ">=0.4.2"'
     fi
     cat << EOF
 repository = "$repo_url"
@@ -317,9 +317,9 @@ python = ">=3.$py_min,<3.$((py_max+1))"
 [tool.poetry.group.dev.dependencies]
 tomli = { version = ">=2.0.1", python = "<3.11"}
 pytest = ">=8.0.0"
-pytest-cov = ">=5.0.0"
+pytest-cov = ">= 6.0.0"
 pytest-xdist = ">=3.3.1"
-pytest-benchmark = ">=4.0.0"
+pytest-benchmark = ">=5.0.0"
 $pyproject_pre_commit
 gitpython = ">=3.1.41"
 
@@ -563,7 +563,7 @@ fi
   cat << EOF
 repos:
 - repo: https://github.com/rcmdnk/pyproject-pre-commit
-  rev: v0.3.4
+  rev: v0.4.2
   hooks:
 EOF
   if echo "$CHECKERS" | grep -q ruff;then
@@ -631,9 +631,8 @@ EOF
   if [ "$PRE_COMMIT_HOOKS" -eq 1 ];then
      cat <<EOF
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
-    - id: check-byte-order-marker
     - id: check-yaml
     - id: check-json
     - id: check-toml
