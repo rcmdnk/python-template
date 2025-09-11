@@ -334,14 +334,15 @@ EOF
 $repo_name = "$repo_name_underscore:main"
 EOF
     fi
+    cat << EOF
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+EOF
   fi
 
   if echo "$CHECKERS" | grep -q ruff;then
     cat << EOF
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 addopts = "-n auto"
