@@ -268,6 +268,23 @@ EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
 dependencies = []
 
+[project.urls]
+Repository = "$repo_url"
+Documentation = "$repo_url"
+Homepage = "$repo_url"
+Issue = "$repo_url/issues"
+EOF
+
+    if [ "$CLI" = "yes" ];then
+      cat << EOF
+
+[project.scripts]
+$repo_name = "$repo_name_underscore:main"
+EOF
+    fi
+
+    cat << EOF
+
 [dependency-groups]
 dev = [
     "tomli >= 2.0.1; python_version < '3.11'",
@@ -284,23 +301,10 @@ dev = [
     "types-six>=1.16.21.20241105",
 ]
 
-[project.urls]
-Repository = "$repo_url"
-Documentation = "$repo_url"
-Homepage = "$repo_url"
-Issue = "$repo_url/issues"
-
 [build-system]
 requires = ["uv_build>=0.8.0,<0.9.0"]
 build-backend = "uv_build"
 EOF
-    if [ "$CLI" = "yes" ];then
-      cat << EOF
-
-[project.scripts]
-$repo_name = "$repo_name_underscore:main"
-EOF
-    fi
   else
     if echo "$CHECKERS" | grep -q ruff;then
       pyproject_pre_commit='pyproject-pre-commit = { version = ">=0.4.2", extras = ["ruff"]}'
@@ -322,10 +326,6 @@ pytest-xdist = ">=3.3.1"
 pytest-benchmark = ">=5.0.0"
 $pyproject_pre_commit
 gitpython = ">=3.1.41"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 EOF
     if [ "$CLI" = "yes" ];then
       cat << EOF
@@ -338,6 +338,10 @@ EOF
 
   if echo "$CHECKERS" | grep -q ruff;then
     cat << EOF
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 addopts = "-n auto"

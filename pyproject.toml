@@ -10,6 +10,12 @@ classifiers = []
 requires-python = ">=3.10,<3.14"
 dependencies = []
 
+[project.urls]
+Repository = "https://github.com/rcmdnk/python-template"
+Documentation = "https://github.com/rcmdnk/python-template"
+Homepage = "https://github.com/rcmdnk/python-template"
+Issue = "https://github.com/rcmdnk/python-template/issues"
+
 [dependency-groups]
 dev = [
     "tomli >= 2.0.1; python_version < '3.11'",
@@ -20,12 +26,6 @@ dev = [
     "pyproject-pre-commit[ruff] >= 0.4.2",
     "gitpython >= 3.1.41",
 ]
-
-[project.urls]
-Repository = "https://github.com/rcmdnk/python-template"
-Documentation = "https://github.com/rcmdnk/python-template"
-Homepage = "https://github.com/rcmdnk/python-template"
-Issue = "https://github.com/rcmdnk/python-template/issues"
 
 [build-system]
 requires = ["uv_build>=0.8.0,<0.9.0"]
