@@ -117,7 +117,7 @@ function sedi {
 
 ...
 
-Based on [rcmdnk/python-template](https://github.com/rcmdnk/python-template), $template_version
+This repository is based on [rcmdnk/python-template](https://github.com/rcmdnk/python-template), $template_version
 EOF
 } > README.md
 # }}}
