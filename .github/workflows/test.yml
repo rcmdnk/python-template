@@ -35,7 +35,7 @@ on:
 env:
   MAIN_BRANCH: ${{ inputs.main_branch || 'main' }}
   MAIN_OS: ${{ inputs.main_os || 'ubuntu-latest' }}
-  MAIN_PY_VER: ${{ inputs.main_py_ver || '3.10' }}
+  MAIN_PY_VER: ${{ inputs.main_py_ver || '3.14' }}
   TMATE: ${{ inputs.tmate || 'false' }}
 
 concurrency:
@@ -48,7 +48,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.10"]
+        python-version: ["3.14"]
     permissions:
       contents: write
     runs-on: ${{ matrix.os }}
