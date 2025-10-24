@@ -282,12 +282,16 @@ EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
 dependencies = []
 
+EOF
+  if [ -n "$LICENSE" ];then
+    cat << EOF
 [project.urls]
 Repository = "$repo_url"
 Documentation = "$repo_url"
 Homepage = "$repo_url"
 Issue = "$repo_url/issues"
 EOF
+  fi
 
     if [ "$CLI" = "yes" ];then
       cat << EOF
@@ -320,14 +324,18 @@ requires = ["uv_build>=0.8.0,<0.9.0"]
 build-backend = "uv_build"
 EOF
   else
+    if [ -n "$repo_url" ];then
+      cat << EOF
+repository = "$repo_url"
+homepage = "$repo_url"
+EOF
+    fi
     if echo "$CHECKERS" | grep -q ruff;then
       pyproject_pre_commit='pyproject-pre-commit = { version = ">=0.4.2", extras = ["ruff"]}'
     else
       pyproject_pre_commit='pyproject-pre-commit = ">=0.4.2"'
     fi
     cat << EOF
-repository = "$repo_url"
-homepage = "$repo_url"
 
 [tool.poetry.dependencies]
 python = ">=3.$py_min,<3.$((py_max+1))"
