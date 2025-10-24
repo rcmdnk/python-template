@@ -59,10 +59,12 @@ else
 fi
 
 if [ -z "$user" ];then
-  user=user
+  echo "Please input your name (user name for GitHub): "
+  read -r user
 fi
 if [ -z "$email" ];then
-  email="email@example.com"
+  echo "Please input your email address: "
+  read -r email
 fi
 
 repo_name_underscore=${repo_name//-/_}
