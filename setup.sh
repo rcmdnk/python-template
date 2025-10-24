@@ -10,6 +10,7 @@ OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-lat
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
 CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
+LICENSE="Apache-2.0" # License type, currently only Apache-2.0 is supported. Set empty to skip license setup.
 USER=""
 EMAIL=""
 PRE_COMMIT_PYPROJECT_OTHERS=1
@@ -261,7 +262,13 @@ version = "0.1.0"
 description = ""
 ${authors}
 readme = "README.md"
-license = "Apache-2.0"
+EOF
+  if [ -n "$LICENSE" ];then
+    cat << EOF
+license = ${LICENSE}
+EOF
+  fi
+  cat << EOF
 keywords = []
 classifiers = []
 EOF
@@ -493,8 +500,12 @@ EOF
 # }}}
 
 # LICENSE {{{
-sedi "s/2023/$year/" LICENSE
-sedi "s/@rcmdnk/@${user}/" LICENSE
+if [ "$LICENSE" = "Apache-2.0" ];then
+  sedi "s/2023/$year/" LICENSE
+  sedi "s/@rcmdnk/@${user}/" LICENSE
+else
+  rm -f LICENSE
+fi
 # }}}
 
 # src {{{
