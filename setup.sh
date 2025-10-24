@@ -265,7 +265,7 @@ readme = "README.md"
 EOF
   if [ -n "$LICENSE" ];then
     cat << EOF
-license = ${LICENSE}
+license = "${LICENSE}"
 EOF
   fi
   cat << EOF
@@ -283,7 +283,7 @@ requires-python = ">=3.$py_min,<3.$((py_max+1))"
 dependencies = []
 
 EOF
-  if [ -n "$LICENSE" ];then
+  if [ -n "$repo_url" ];then
     cat << EOF
 [project.urls]
 Repository = "$repo_url"
@@ -522,17 +522,21 @@ if [ "$repo_name_underscore" != "python_template" ];then
 fi
 if [ "$CLI" = "yes" ];then
   cat << EOF > "src/$repo_name_underscore/${repo_name_underscore}.py"
+import logging
 import sys
+
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
     match len(sys.argv):
         case 1:
-            print('Hello World!')
+            logger.info('Hello World!')
         case 2:
-            print(f'Hello {sys.argv[1]}!')
+            logger.info('Hello %s!', sys.argv[1])
         case _:
-            print(f'Hello {", ".join(sys.argv[1:])}!')
+            logger.info('Hello %s!', ', '.join(sys.argv[1:]))
 
 
 if __name__ == '__main__':
@@ -562,6 +566,7 @@ if [ "$PROJECT_MANAGER" = "poetry" ];then
 fi
 if [ "$CLI" = "yes" ];then
   cat << EOF > "tests/test_${repo_name_underscore}.py"
+import logging
 import sys
 
 import pytest
@@ -570,21 +575,24 @@ from $repo_name_underscore import main
 
 
 @pytest.mark.parametrize(
-    'argv, out',
+    ('argv', 'out'),
     [
-        (['$repo_name_underscore'], 'Hello World!\n'),
-        (['$repo_name_underscore', 'Alice'], 'Hello Alice!\n'),
+        (['$repo_name_underscore'], 'Hello World!'),
+        (['$repo_name_underscore', 'Alice'], 'Hello Alice!'),
         (
             ['$repo_name_underscore', 'Alice', 'Bob', 'Carol'],
-            'Hello Alice, Bob, Carol!\n',
+            'Hello Alice, Bob, Carol!',
         ),
     ],
 )
-def test_main(argv, out, capsys):
+def test_main(
+    argv: list[str], out: str, caplog: pytest.CaptureFixture
+) -> None:
+    caplog.set_level(logging.INFO)
     sys.argv = argv
     main()
-    captured = capsys.readouterr()
-    assert captured.out == out
+    assert len(caplog.records) == 1
+    assert caplog.records[0].getMessage() == out
 EOF
 fi
 # }}}

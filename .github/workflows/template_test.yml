@@ -30,6 +30,8 @@ jobs:
           version=$(grep ^version pyproject.toml)
           sed -i "s/PROJECT_MANAGER=\"uv\"/PROJECT_MANAGER=\"${{ matrix.project_manager }}\"/" setup.sh
           sed -i "s/CLI=\"no\"/CLI=\"${{ matrix.cli }}\"/" setup.sh
+          sed -i "s/USER=\"\"/USER=\"user\"/" setup.sh
+          sed -i "s/EMAIL=\"\"/EMAIL=\"user@example.com\"/" setup.sh
           ./setup.sh
           sed -i "s/^version.*/$version/" pyproject.toml
       - uses: actions/setup-python@v6
