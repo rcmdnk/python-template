@@ -2,7 +2,7 @@
 
 
 PROJECT_MANAGER="uv" # "uv" or "poetry"
-PY_VER="3.13,3.12,3.11,3.10" # comma separated python versions
+PY_VER="3.14,3.13,3.12,3.11,3.10" # comma separated python versions
 # shellcheck disable=SC2034
 PY_MAIN=${PY_VER%%,*}
 OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-latest, windows-latest"
@@ -35,7 +35,12 @@ user="$USER"
 email="$EMAIL"
 
 if type git >/dev/null 2>&1;then
-  repo_url=$(git remote get-url origin)
+  repo_url=$(git remote get-url origin 2>/dev/null)
+  if [ "$(basename "$repo_url")" = "python-template" ];then
+    repo_url=""
+  fi
+fi
+if [ -n "$repo_url" ];then
   repo_url=${repo_url//git@github.com:/https:\/\/github.com\/}
   repo_url=${repo_url//ssh:\/\/git@github.com/https:\/\/github.com}
 
