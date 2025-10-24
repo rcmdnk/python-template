@@ -509,14 +509,14 @@ import sys
 def main() -> None:
     match len(sys.argv):
         case 1:
-            print("Hello World!")
+            print('Hello World!')
         case 2:
-            print(f"Hello {sys.argv[1]}!")
+            print(f'Hello {sys.argv[1]}!')
         case _:
-            print(f"Hello {', '.join(sys.argv[1:])}!")
+            print(f'Hello {", ".join(sys.argv[1:])}!')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 EOF
   cat << EOF > "src/$repo_name_underscore/__init__.py"
@@ -551,13 +551,13 @@ from $repo_name_underscore import main
 
 
 @pytest.mark.parametrize(
-    "argv, out",
+    'argv, out',
     [
-        (["$repo_name_underscore"], "Hello World!\n"),
-        (["$repo_name_underscore", "Alice"], "Hello Alice!\n"),
+        (['$repo_name_underscore'], 'Hello World!\n'),
+        (['$repo_name_underscore', 'Alice'], 'Hello Alice!\n'),
         (
-            ["$repo_name_underscore", "Alice", "Bob", "Carol"],
-            "Hello Alice, Bob, Carol!\n",
+            ['$repo_name_underscore', 'Alice', 'Bob', 'Carol'],
+            'Hello Alice, Bob, Carol!\n',
         ),
     ],
 )
