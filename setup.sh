@@ -490,6 +490,13 @@ non_interactive = true
 EOF
   fi
 
+  if echo "$CHECKERS" | grep -q ty;then
+    cat << EOF
+
+[tool.ty.rules]
+EOF
+  fi
+
   if echo "$CHECKERS" | grep -q numpydoc;then
     cat << EOF
 
