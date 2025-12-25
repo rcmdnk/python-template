@@ -9,7 +9,7 @@ OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-lat
 # shellcheck disable=SC2034
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
-CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,numpydoc
+CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,ty,numpydoc
 LICENSE="Apache-2.0" # License type, currently only Apache-2.0 is supported. Set empty to skip license setup.
 USER=""
 EMAIL=""
@@ -656,6 +656,11 @@ EOF
     #- id: dmypy
 EOF
   fi
+  if echo "$CHECKERS" | grep -q ty;then
+    cat << EOF
+    - id: ty
+EOF
+  fi
   if echo "$CHECKERS" | grep -q numpydoc;then
     cat << EOF
     - id: numpydoc-validation
@@ -698,6 +703,8 @@ EOF
   rev: v1.7.7
   hooks:
     - id: actionlint
+      args:
+        - "-ignore=SC2129"  # allow individual redirects ({} >> file is not allowed in GitHub Actions' run)
 EOF
   fi
 }  > .pre-commit-config.yaml
