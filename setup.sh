@@ -319,18 +319,18 @@ EOF
 
 [dependency-groups]
 dev = [
-    "tomli >= 2.0.1; python_version < '3.11'",
-    "pytest >= 8.0.0",
-    "pytest-cov >= 6.0.0",
-    "pytest-xdist >= 3.3.1",
-    "pytest-benchmark >= 5.0.0",
+    "tomli >= 2.4.0; python_version < '3.11'",
+    "pytest >= 9.0.2",
+    "pytest-cov >= 7.0.0",
+    "pytest-xdist >= 3.8.0",
+    "pytest-benchmark >= 5.2.3",
     "$pyproject_pre_commit",
-    "gitpython >= 3.1.41",
-    "types-pymysql>=1.1.0.20241103",
-    "types-pyyaml>=6.0.12.20240917",
-    "types-decorator>=5.1.8.20240310",
+    "gitpython >= 3.1.46",
+    "types-pymysql>=1.1.0.20251220",
+    "types-pyyaml>=6.0.12.20250915",
+    "types-decorator>=5.2.0.20251101",
     "types-redis>=4.6.0.20241004",
-    "types-six>=1.16.21.20241105",
+    "types-six>=1.17.0.20251009",
 ]
 
 [build-system]
@@ -346,12 +346,12 @@ EOF
     fi
     if check ruff;then
       if check ty;then
-        extras='extras = ["ruff", "ty"]'
+        extras=', extras = ["ruff", "ty"]'
       else
-        extras='extras = ["ruff"]'
+        extras=', extras = ["ruff"]'
       fi
     elif check ty;then
-        extras='extras = ["ty"]'
+        extras=', extras = ["ty"]'
     else
       extras=''
     fi
@@ -363,12 +363,17 @@ python = ">=3.$py_min,<3.$((py_max+1))"
 
 [tool.poetry.group.dev.dependencies]
 tomli = { version = ">=2.0.1", python = "<3.11"}
-pytest = ">=8.0.0"
-pytest-cov = ">= 6.0.0"
-pytest-xdist = ">=3.3.1"
-pytest-benchmark = ">=5.0.0"
+pytest = ">=9.0.2"
+pytest-cov = ">= 7.0.0"
+pytest-xdist = ">=3.8.0"
+pytest-benchmark = ">=5.2.3"
 $pyproject_pre_commit
-gitpython = ">=3.1.41"
+gitpython = ">= 3.1.46"
+types-pymysql = ">= 1.1.0.20251220"
+types-pyyaml = ">= 6.0.12.20250915"
+types-decorator = ">= 5.2.0.20251101"
+types-redis = ">= 4.6.0.20241004"
+types-six = ">= 1.17.0.20251009"
 EOF
     if [ "$CLI" = "yes" ];then
       cat << EOF

@@ -1,6 +1,6 @@
 [project]
 name = "python-template"
-version = "0.2.3"
+version = "0.2.4"
 description = ""
 authors = [ { name = "rcmdnk", email = "rcmdnk@gmail.com" } ]
 readme = "README.md"
@@ -18,13 +18,18 @@ Issue = "https://github.com/rcmdnk/python-template/issues"
 
 [dependency-groups]
 dev = [
-    "tomli >= 2.0.1; python_version < '3.11'",
-    "pytest >= 8.0.0",
-    "pytest-cov >= 6.0.0",
-    "pytest-xdist >= 3.3.1",
-    "pytest-benchmark >= 5.0.0",
+    "tomli >= 2.4.0; python_version < '3.11'",
+    "pytest >= 9.0.2",
+    "pytest-cov >= 7.0.0",
+    "pytest-xdist >= 3.8.0",
+    "pytest-benchmark >= 5.2.3",
     "pyproject-pre-commit[ruff,ty] >= 0.5.1",
-    "gitpython >= 3.1.41",
+    "gitpython >= 3.1.46",
+    "types-pymysql>=1.1.0.20251220",
+    "types-pyyaml>=6.0.12.20250915",
+    "types-decorator>=5.2.0.20251101",
+    "types-redis>=4.6.0.20241004",
+    "types-six>=1.17.0.20251009",
 ]
 
 [build-system]
