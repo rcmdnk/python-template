@@ -23,7 +23,7 @@ dev = [
     "pytest-cov >= 6.0.0",
     "pytest-xdist >= 3.3.1",
     "pytest-benchmark >= 5.0.0",
-    "pyproject-pre-commit[ruff] >= 0.4.2",
+    "pyproject-pre-commit[ruff,ty] >= 0.5.1",
     "gitpython >= 3.1.41",
 ]
 

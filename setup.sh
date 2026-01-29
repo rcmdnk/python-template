@@ -9,7 +9,7 @@ OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-lat
 # shellcheck disable=SC2034
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
-CHECKERS="ruff,mypy,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,ty,numpydoc
+CHECKERS="ruff,ty,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,ty,numpydoc
 LICENSE="Apache-2.0" # License type, currently only Apache-2.0 is supported. Set empty to skip license setup.
 USER=""
 EMAIL=""
@@ -101,6 +101,11 @@ function sedi {
   local file="$2"
   sed "$cmd" "$file" > "$tmpfile"
   mv "$tmpfile" "$file"
+}
+
+function check {
+  checker="$1"
+  echo ",${CHECKERS}," | grep -q ",${checker},"
 }
 
 # README.md {{{
@@ -275,11 +280,18 @@ keywords = []
 classifiers = []
 EOF
   if [ "$PROJECT_MANAGER" = "uv" ];then
-    if echo "$CHECKERS" | grep -q ruff;then
-      pyproject_pre_commit="pyproject-pre-commit[ruff] >= 0.4.2"
+    if check ruff;then
+      if check ty;then
+        extras="[ruff,ty]"
+      else
+        extras="[ruff]"
+      fi
+    elif check ty;then
+      extras="[ty]"
     else
-      pyproject_pre_commit="pyproject-pre-commit >= 0.4.2"
+      extras=""
     fi
+    pyproject_pre_commit="pyproject-pre-commit${extras} >= 0.5.1"
     cat << EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
 dependencies = []
@@ -332,11 +344,18 @@ repository = "$repo_url"
 homepage = "$repo_url"
 EOF
     fi
-    if echo "$CHECKERS" | grep -q ruff;then
-      pyproject_pre_commit='pyproject-pre-commit = { version = ">=0.4.2", extras = ["ruff"]}'
+    if check ruff;then
+      if check ty;then
+        extras='extras = ["ruff", "ty"]'
+      else
+        extras='extras = ["ruff"]'
+      fi
+    elif check ty;then
+        extras='extras = ["ty"]'
     else
-      pyproject_pre_commit='pyproject-pre-commit = ">=0.4.2"'
+      extras=''
     fi
+    pyproject_pre_commit="pyproject-pre-commit = { version = \">=0.5.1\" $extras }"
     cat << EOF
 
 [tool.poetry.dependencies]
@@ -365,7 +384,7 @@ build-backend = "poetry.core.masonry.api"
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q ruff;then
+  if check ruff;then
     cat << EOF
 
 [tool.pytest.ini_options]
@@ -413,7 +432,7 @@ docstring-code-format = true
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q black;then
+  if check black;then
     cat << EOF
 
 [tool.black]
@@ -421,7 +440,7 @@ line-length = 79
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q autoflake;then
+  if check autoflake;then
     cat << EOF
 
 [tool.autoflake]
@@ -432,7 +451,7 @@ remove-unused-variables = true
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q autopep8;then
+  if check autopep8;then
     cat << EOF
 
 [tool.autopep8]
@@ -442,7 +461,7 @@ aggressive = 3
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q isort;then
+  if check isort;then
     cat << EOF
 
 [tool.isort]
@@ -452,7 +471,7 @@ EOF
 
   fi
 
-  if echo "$CHECKERS" | grep -q flake8;then
+  if check flake8;then
     cat << EOF
 
 [tool.flake8]
@@ -468,7 +487,7 @@ EOF
 
   fi
 
-  if echo "$CHECKERS" | grep -q bandit;then
+  if check bandit;then
     cat << EOF
 
 [tool.bandit]
@@ -477,7 +496,7 @@ EOF
 
   fi
 
-  if echo "$CHECKERS" | grep -q mypy;then
+  if check mypy;then
     cat << EOF
 
 [tool.mypy]
@@ -491,14 +510,14 @@ non_interactive = true
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q ty;then
+  if check ty;then
     cat << EOF
 
 [tool.ty.rules]
 EOF
   fi
 
-  if echo "$CHECKERS" | grep -q numpydoc;then
+  if check numpydoc;then
     cat << EOF
 
 [tool.numpydoc_validation]
@@ -612,10 +631,10 @@ fi
   cat << EOF
 repos:
 - repo: https://github.com/rcmdnk/pyproject-pre-commit
-  rev: v0.4.2
+  rev: v0.5.1
   hooks:
 EOF
-  if echo "$CHECKERS" | grep -q ruff;then
+  if check ruff;then
     cat << EOF
     - id: ruff-lint-diff
     - id: ruff-lint
@@ -623,53 +642,53 @@ EOF
     - id: ruff-format
 EOF
   fi
-  if echo "$CHECKERS" | grep -q black;then
+  if check black;then
     cat << EOF
     - id: black-diff
     - id: black
     - id: blacken-docs
 EOF
   fi
-  if echo "$CHECKERS" | grep -q autoflake;then
+  if check autoflake;then
     cat << EOF
     - id: autoflake-diff
     - id: autoflake
 EOF
   fi
-  if echo "$CHECKERS" | grep -q autopep8;then
+  if check autopep8;then
     cat << EOF
     - id: autopep8-diff
     - id: autopep8
 EOF
   fi
-  if echo "$CHECKERS" | grep -q isort;then
+  if check isort;then
     cat << EOF
     - id: isort-diff
     - id: isort
 EOF
   fi
-  if echo "$CHECKERS" | grep -q flake8;then
+  if check flake8;then
     cat << EOF
     - id: flake8
 EOF
   fi
-  if echo "$CHECKERS" | grep -q bandit;then
+  if check bandit;then
     cat << EOF
     - id: bandit
 EOF
   fi
-  if echo "$CHECKERS" | grep -q mypy;then
+  if check mypy;then
     cat << EOF
     - id: mypy
     #- id: dmypy
 EOF
   fi
-  if echo "$CHECKERS" | grep -q ty;then
+  if check ty;then
     cat << EOF
     - id: ty
 EOF
   fi
-  if echo "$CHECKERS" | grep -q numpydoc;then
+  if check numpydoc;then
     cat << EOF
     - id: numpydoc-validation
 EOF
