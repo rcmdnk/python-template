@@ -620,7 +620,7 @@ from $repo_name_underscore import main
     ],
 )
 def test_main(
-    argv: list[str], out: str, caplog: pytest.CaptureFixture
+    argv: list[str], out: str, caplog: pytest.LogCaptureFixture
 ) -> None:
     caplog.set_level(logging.INFO)
     sys.argv = argv
