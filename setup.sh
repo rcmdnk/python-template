@@ -397,6 +397,7 @@ ignore = [
 "tests/**" = [
     "S101", # Use of \`assert\` detected
     "DTZ001", # \`datetime.datetime()\` called without a \`tzinfo\` argument
+    "PLR0913", # Too many arguments in function definition
     "PLR2004", # Magic value used in comparison
 ]
 
