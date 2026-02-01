@@ -18,11 +18,11 @@ wheels = [
 
 [[package]]
 name = "babel"
-version = "2.17.0"
+version = "2.18.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7d/6b/d52e42361e1aa00709585ecc30b3f9684b3ab62530771402248b1b1d6240/babel-2.17.0.tar.gz", hash = "sha256:0c54cffb19f690cdcc52a3b50bcbf71e07a808d1c80d549f2459b9d2cf0afb9d", size = 9951852, upload-time = "2025-02-01T15:17:41.026Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/b2/51899539b6ceeeb420d40ed3cd4b7a40519404f9baf3d4ac99dc413a834b/babel-2.18.0.tar.gz", hash = "sha256:b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d", size = 9959554, upload-time = "2026-02-01T12:30:56.078Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/b8/3fe70c75fe32afc4bb507f75563d39bc5642255d1d94f1f23604725780bf/babel-2.17.0-py3-none-any.whl", hash = "sha256:4d0b53093fdfb4b21c92b5213dba5a1b23885afa8383709427046b21c366e5f2", size = 10182537, upload-time = "2025-02-01T15:17:37.39Z" },
+    { url = "https://files.pythonhosted.org/packages/77/f5/21d2de20e8b8b0408f0681956ca2c69f1320a3848ac50e6e7f39c6159675/babel-2.18.0-py3-none-any.whl", hash = "sha256:e2b422b277c2b9a9630c1d7903c2a00d0830c409c59ac8cae9081c92f1aeba35", size = 10196845, upload-time = "2026-02-01T12:30:53.445Z" },
 ]
 
 [[package]]
@@ -807,15 +807,15 @@ wheels = [
 
 [[package]]
 name = "mdformat-footnote"
-version = "0.1.2"
+version = "0.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "mdformat" },
     { name = "mdit-py-plugins" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/27/25/08e1feac080165330278f31f605f28a963ef51864aee8306dd2039b55a61/mdformat_footnote-0.1.2.tar.gz", hash = "sha256:d8e6a7fece0f902f0c7dfbd009c093182b9b523527ae48f57f57506d79ccb4ec", size = 3358, upload-time = "2025-10-19T09:36:34.381Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/c0/0fe461e3c53eb72b35b642add6c3eaf1f90e43a574a18633955f9e89791d/mdformat_footnote-0.1.3.tar.gz", hash = "sha256:70617e61af87f59d7dea93a392c5093089a6d4551126fa18025c6fddb18bf742", size = 6430, upload-time = "2026-01-30T14:13:05.983Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/99/47/07544df46d55284cc1862acd49dc30f984e4e5cb1630becbf216692f30b6/mdformat_footnote-0.1.2-py3-none-any.whl", hash = "sha256:fe23888fc8ddb68c080bae9787a65bb1e51253f5de2bea2633feffdb095e59cd", size = 4139, upload-time = "2025-10-19T09:36:33.362Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/ac/60d47237a0e37fe991cbf311f10f096a28cfdbbe25d1932dadf8e9abdac8/mdformat_footnote-0.1.3-py3-none-any.whl", hash = "sha256:3033184237cbaf2a71cc02a4c37f043a97c1f16d3ed6939bc104964e77aad0b3", size = 7767, upload-time = "2026-01-30T14:13:04.944Z" },
 ]
 
 [[package]]
@@ -1117,7 +1117,7 @@ wheels = [
 
 [[package]]
 name = "pyproject-pre-commit"
-version = "0.5.1"
+version = "0.5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "mdformat" },
@@ -1139,9 +1139,9 @@ dependencies = [
     { name = "shellcheck-py" },
     { name = "validate-pyproject", extra = ["all"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/14/c8/fe9250fc97e1143ea719f7fd61a243da833eb41359615f376f7ea4695979/pyproject_pre_commit-0.5.1.tar.gz", hash = "sha256:24b56a6fc2a1df6f68f527ea0424df797ad68701b8b35d3183857f82a8020560", size = 125057, upload-time = "2025-12-25T09:33:45.305Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/a6/11d82e14025acc32047d0a103743688d0c98912075e4c15e9b6bb54a0449/pyproject_pre_commit-0.5.2.tar.gz", hash = "sha256:ec71bd6579d81a0068f8f1d578a9806da07c61820e1e9c1603bfe0f65a961b1f", size = 123363, upload-time = "2026-02-01T00:50:35.99Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3e/d0/fa77f8b34c44cd0e410b63b638d48736b1ee14de3a0463d99908bfc6d1eb/pyproject_pre_commit-0.5.1-py3-none-any.whl", hash = "sha256:cacd643f8e184e71a3ee6c948882a48f4aa1ad7c98cbbb73c22c1897a87265e9", size = 11241, upload-time = "2025-12-25T09:33:43.543Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/93/afc36a99b90d8c0d104a90112cd693d4508677deb66bff5bf62d88dab6fc/pyproject_pre_commit-0.5.2-py3-none-any.whl", hash = "sha256:0df7ed1efdaa10ad860513c0278a3115666db96087086ba76d561274f9b095b8", size = 11241, upload-time = "2026-02-01T00:50:37.316Z" },
 ]
 
 [package.optional-dependencies]
@@ -1805,9 +1805,9 @@ wheels = [
 
 [[package]]
 name = "wcwidth"
-version = "0.5.0"
+version = "0.5.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/64/6e/62daec357285b927e82263a81f3b4c1790215bc77c42530ce4a69d501a43/wcwidth-0.5.0.tar.gz", hash = "sha256:f89c103c949a693bf563377b2153082bf58e309919dfb7f27b04d862a0089333", size = 246585, upload-time = "2026-01-27T01:31:44.942Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c2/62/a7c072fbfefb2980a00f99ca994279cb9ecf310cb2e6b2a4d2a28fe192b3/wcwidth-0.5.3.tar.gz", hash = "sha256:53123b7af053c74e9fe2e92ac810301f6139e64379031f7124574212fb3b4091", size = 157587, upload-time = "2026-01-31T03:52:10.92Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f2/3e/45583b67c2ff08ad5a582d316fcb2f11d6cf0a50c7707ac09d212d25bc98/wcwidth-0.5.0-py3-none-any.whl", hash = "sha256:1efe1361b83b0ff7877b81ba57c8562c99cf812158b778988ce17ec061095695", size = 93772, upload-time = "2026-01-27T01:31:43.432Z" },
+    { url = "https://files.pythonhosted.org/packages/3c/c1/d73f12f8cdb1891334a2ccf7389eed244d3941e74d80dd220badb937f3fb/wcwidth-0.5.3-py3-none-any.whl", hash = "sha256:d584eff31cd4753e1e5ff6c12e1edfdb324c995713f75d26c29807bb84bf649e", size = 92981, upload-time = "2026-01-31T03:52:09.14Z" },
 ]
