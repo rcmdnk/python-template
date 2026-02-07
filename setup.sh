@@ -105,8 +105,14 @@ function sedi {
 }
 
 function check {
-  checker="$1"
-  echo ",${CHECKERS}," | grep -q ",${checker},"
+  for c in "$@";do
+    echo ",${CHECKERS}," | grep -q ",${c},"
+    ret=$?
+    if [ $ret -eq 0 ];then
+      return 0
+    fi
+  done
+  return 1
 }
 
 # README.md {{{
@@ -300,14 +306,14 @@ EOF
   if [ "$PROJECT_MANAGER" = "uv" ];then
     if [ -n "$PRE_COMMIT" ];then
       extras=""
-      if check ruff;then
-        extras="${extras:+${extras},}ruff"
+      if [ "$PRE_COMMIT" = "pre-commit" ];then
+        extras="${extras:+${extras},}pre-commit"
       fi
-      if check ty;then
-        extras="${extras:+${extras},}ty"
+      if check black autoflake autopep8 isort flake8 bandit mypy;then
+        extras="${extras:+${extras},}black"
       fi
-      if [ "$PRE_COMMIT" = "prek" ];then
-        extras="${extras:+${extras},}prek"
+      if check mypy;then
+        extras="${extras:+${extras},}mypy"
       fi
       if [ -n "$extras" ];then
         extras="[${extras}]"
@@ -364,14 +370,14 @@ EOF
     fi
     if [ -n "$PRE_COMMIT" ];then
       extras=""
-      if check ruff;then
-        extras="${extras:+${extras}, }\"ruff\""
+      if [ "$PRE_COMMIT" = "pre-commit" ];then
+        extras="${extras:+${extras}, }\"pre-commit\""
       fi
-      if check ty;then
-        extras="${extras:+${extras}, }\"ty\""
+      if check black autoflake autopep8 isort flake8 bandit mypy;then
+        extras="${extras:+${extras}, }\"black\""
       fi
-      if [ "$PRE_COMMIT" = "prek" ];then
-        extras="${extras:+${extras}, }\"prek\""
+      if check mypy;then
+        extras="${extras:+${extras}, }\"mypy\""
       fi
       if [ -n "$extras" ];then
         extras=", extras = [${extras}] "
