@@ -377,7 +377,7 @@ EOF
         extras=", extras = [${extras}] "
       fi
       pyproject_pre_commit="
-pyproject-pre-commit = { version = \">=0.6.1\"${extras}},
+pyproject-pre-commit = { version = \">=0.6.1\"${extras}}
 "
     fi
     cat << EOF
