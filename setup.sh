@@ -310,7 +310,7 @@ EOF
         extras="${extras:+${extras},}prek"
       fi
       if [ -n "$extras" ];then
-        extras="[\"${extras}\"]"
+        extras="[${extras}]"
       fi
       pyproject_pre_commit="
     \"pyproject-pre-commit${extras} >= 0.6.1\",
