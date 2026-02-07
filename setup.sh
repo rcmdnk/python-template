@@ -301,13 +301,13 @@ EOF
     if [ -n "$PRE_COMMIT" ];then
       extras=""
       if check ruff;then
-        extras="${extras:${extras},}ruff"
+        extras="${extras:+${extras},}ruff"
       fi
       if check ty;then
-        extras="${extras:${extras},}ty"
+        extras="${extras:+${extras},}ty"
       fi
       if [ "$PRE_COMMIT" = "prek" ];then
-        extras="${extras:${extras},}prek"
+        extras="${extras:+${extras},}prek"
       fi
       if [ -n "$extras" ];then
         extras="[\"${extras}\"]"
@@ -365,13 +365,13 @@ EOF
     if [ -n "$PRE_COMMIT" ];then
       extras=""
       if check ruff;then
-        extras="${extras:${extras}, }\"ruff\""
+        extras="${extras:+${extras}, }\"ruff\""
       fi
       if check ty;then
-        extras="${extras:${extras}, }\"ty\""
+        extras="${extras:+${extras}, }\"ty\""
       fi
       if [ "$PRE_COMMIT" = "prek" ];then
-        extras="${extras:${extras}, }\"prek\""
+        extras="${extras:+${extras}, }\"prek\""
       fi
       if [ -n "$extras" ];then
         extras=", extras = [${extras}] "
