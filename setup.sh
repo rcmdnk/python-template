@@ -9,13 +9,14 @@ OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-lat
 # shellcheck disable=SC2034
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
+PRE_COMMIT='prek' # 'pre-commit', 'prek' or '' to disable pre-commit setup
 CHECKERS="ruff,ty,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,ty,numpydoc
-LICENSE="Apache-2.0" # License type, currently only Apache-2.0 is supported. Set empty to skip license setup.
-USER=""
-EMAIL=""
 PRE_COMMIT_PYPROJECT_OTHERS=1
 PRE_COMMIT_HOOKS=1
 PRE_COMMIT_ACTIONLINT=1
+LICENSE="Apache-2.0" # License type, currently only Apache-2.0 is supported. Set empty to skip license setup.
+USER=""
+EMAIL=""
 
 if [ "$PROJECT_MANAGER" != "uv" ] && [ "$PROJECT_MANAGER" != "poetry" ];then
   echo "Wrong PROJECT_MANAGER: $PROJECT_MANAGER, should be 'uv' or 'poetry'" 1>&2
@@ -184,21 +185,35 @@ $ poetry shell
 EOF
   fi
 
-  cat << EOF
+  if [ "$PRE_COMMIT" = "pre-commit" ];then
+    pre_commit_url="[pre-commit](https://pre-commit.com/)"
+    pre_commit_in_help="It checks codes with \`$PRE_COMMIT\` and runs tests with \`pytest\`.
+"
+  elif [ "$PRE_COMMIT" = "prek" ];then
+    pre_commit_url="[prek](https://github.com/j178/prek)"
+    pre_commit_in_help="It checks codes with \`$PRE_COMMIT\` and runs tests with \`pytest\`.
+"
+  elif [ -n "$PRE_COMMIT" ];then
+    echo "Unknown PRE_COMMIT: $PRE_COMMIT" 1>&2
+    exit 1
+  fi
 
-## pre-commit
+  if [ -n "$PRE_COMMIT" ];then
+    cat << EOF
 
-To check codes at the commit, use [pre-commit](https://pre-commit.com/).
+## Pre-commit checks
 
-\`pre-commit\` command will be installed in the $PROJECT_MANAGER environment.
+To check codes at the commit, use $pre_commit_url.
+
+\`$PRE_COMMIT\` command will be installed in the $PROJECT_MANAGER environment.
 
 First, run:
 
 \`\`\`
-$ pre-commit install
+$ $PRE_COMMIT install
 \`\`\`
 
-Then \`pre-commit\` will be run at the commit.
+Then \`$PRE_COMMIT\` will be run at the commit.
 
 Sometimes, you may want to skip the check. In that case, run:
 
@@ -206,11 +221,15 @@ Sometimes, you may want to skip the check. In that case, run:
 $ git commit --no-verify
 \`\`\`
 
-You can run \`pre-commit\` on entire repository manually:
+You can run \`$PRE_COMMIT\` on entire repository manually:
 
 \`\`\`
-$ pre-commit run -a
+$ $PRE_COMMIT run -a
 \`\`\`
+EOF
+  fi
+
+  cat << EOF
 
 ## pytest
 
@@ -238,8 +257,7 @@ by [GitHub Actions](https://github.co.jp/features/actions).
 
 The job runs at the Pull Request, too.
 
-It checks codes with \`pre-commit\` and runs tests with \`pytest\`.
-It also makes a test coverage report and uploads it to [the coverage branch]($repo_url/tree/coverage).
+${pre_commit_in_help}It also makes a test coverage report and uploads it to [the coverage branch]($repo_url/tree/coverage).
 
 You can see the test status as a badge in the README.
 
@@ -280,32 +298,38 @@ keywords = []
 classifiers = []
 EOF
   if [ "$PROJECT_MANAGER" = "uv" ];then
-    if check ruff;then
-      if check ty;then
-        extras="[ruff,ty]"
-      else
-        extras="[ruff]"
-      fi
-    elif check ty;then
-      extras="[ty]"
-    else
+    if [ -n "$PRE_COMMIT" ];then
       extras=""
+      if check ruff;then
+        extras="${extras:${extras},}ruff"
+      fi
+      if check ty;then
+        extras="${extras:${extras},}ty"
+      fi
+      if [ "$PRE_COMMIT" = "prek" ];then
+        extras="${extras:${extras},}prek"
+      fi
+      if [ -n "$extras" ];then
+        extras="[\"${extras}\"]"
+      fi
+      pyproject_pre_commit="
+    \"pyproject-pre-commit${extras} >= 0.6.1\",
+"
     fi
-    pyproject_pre_commit="pyproject-pre-commit${extras} >= 0.5.1"
     cat << EOF
 requires-python = ">=3.$py_min,<3.$((py_max+1))"
 dependencies = []
 
 EOF
-  if [ -n "$repo_url" ];then
-    cat << EOF
+    if [ -n "$repo_url" ];then
+      cat << EOF
 [project.urls]
 Repository = "$repo_url"
 Documentation = "$repo_url"
 Homepage = "$repo_url"
 Issue = "$repo_url/issues"
 EOF
-  fi
+    fi
 
     if [ "$CLI" = "yes" ];then
       cat << EOF
@@ -324,13 +348,7 @@ dev = [
     "pytest-cov >= 7.0.0",
     "pytest-xdist >= 3.8.0",
     "pytest-benchmark >= 5.2.3",
-    "$pyproject_pre_commit",
-    "gitpython >= 3.1.46",
-    "types-pymysql>=1.1.0.20251220",
-    "types-pyyaml>=6.0.12.20250915",
-    "types-decorator>=5.2.0.20251101",
-    "types-redis>=4.6.0.20241004",
-    "types-six>=1.17.0.20251009",
+    "gitpython >= 3.1.46","$pyproject_pre_commit"
 ]
 
 [build-system]
@@ -344,18 +362,24 @@ repository = "$repo_url"
 homepage = "$repo_url"
 EOF
     fi
-    if check ruff;then
-      if check ty;then
-        extras=', extras = ["ruff", "ty"]'
-      else
-        extras=', extras = ["ruff"]'
+    if [ -n "$PRE_COMMIT" ];then
+      extras=""
+      if check ruff;then
+        extras="${extras:${extras}, }\"ruff\""
       fi
-    elif check ty;then
-        extras=', extras = ["ty"]'
-    else
-      extras=''
+      if check ty;then
+        extras="${extras:${extras}, }\"ty\""
+      fi
+      if [ "$PRE_COMMIT" = "prek" ];then
+        extras="${extras:${extras}, }\"prek\""
+      fi
+      if [ -n "$extras" ];then
+        extras=", extras = [${extras}] "
+      fi
+      pyproject_pre_commit="
+pyproject-pre-commit = { version = \">=0.6.1\"${extras}},
+"
     fi
-    pyproject_pre_commit="pyproject-pre-commit = { version = \">=0.5.1\" $extras }"
     cat << EOF
 
 [tool.poetry.dependencies]
@@ -367,13 +391,7 @@ pytest = ">=9.0.2"
 pytest-cov = ">= 7.0.0"
 pytest-xdist = ">=3.8.0"
 pytest-benchmark = ">=5.2.3"
-$pyproject_pre_commit
-gitpython = ">= 3.1.46"
-types-pymysql = ">= 1.1.0.20251220"
-types-pyyaml = ">= 6.0.12.20250915"
-types-decorator = ">= 5.2.0.20251101"
-types-redis = ">= 4.6.0.20241004"
-types-six = ">= 1.17.0.20251009"
+gitpython = ">= 3.1.46"$pyproject_pre_commit
 EOF
     if [ "$CLI" = "yes" ];then
       cat << EOF
@@ -632,82 +650,83 @@ fi
 # }}}
 
 # pre-commit {{{
-{
-  cat << EOF
+if [ -n "$PRE_COMMIT" ];then
+  {
+    cat << EOF
 repos:
 - repo: https://github.com/rcmdnk/pyproject-pre-commit
-  rev: v0.5.1
+  rev: v0.6.1
   hooks:
 EOF
-  if check ruff;then
-    cat << EOF
+    if check ruff;then
+      cat << EOF
     - id: ruff-lint-diff
     - id: ruff-lint
     - id: ruff-format-diff
     - id: ruff-format
 EOF
-  fi
-  if check black;then
-    cat << EOF
+    fi
+    if check black;then
+      cat << EOF
     - id: black-diff
     - id: black
     - id: blacken-docs
 EOF
-  fi
-  if check autoflake;then
-    cat << EOF
+    fi
+    if check autoflake;then
+      cat << EOF
     - id: autoflake-diff
     - id: autoflake
 EOF
-  fi
-  if check autopep8;then
-    cat << EOF
+    fi
+    if check autopep8;then
+      cat << EOF
     - id: autopep8-diff
     - id: autopep8
 EOF
-  fi
-  if check isort;then
-    cat << EOF
+    fi
+    if check isort;then
+      cat << EOF
     - id: isort-diff
     - id: isort
 EOF
-  fi
-  if check flake8;then
-    cat << EOF
+    fi
+    if check flake8;then
+      cat << EOF
     - id: flake8
 EOF
-  fi
-  if check bandit;then
-    cat << EOF
+    fi
+    if check bandit;then
+      cat << EOF
     - id: bandit
 EOF
-  fi
-  if check mypy;then
-    cat << EOF
+    fi
+    if check mypy;then
+      cat << EOF
     - id: mypy
     #- id: dmypy
 EOF
-  fi
-  if check ty;then
-    cat << EOF
+    fi
+    if check ty;then
+      cat << EOF
     - id: ty
 EOF
-  fi
-  if check numpydoc;then
-    cat << EOF
+    fi
+    if check numpydoc;then
+      cat << EOF
     - id: numpydoc-validation
 EOF
-  fi
-  if [ "$PRE_COMMIT_PYPROJECT_OTHERS" -eq 1 ];then
-    cat << EOF
+    fi
+    if [ "$PRE_COMMIT_PYPROJECT_OTHERS" -eq 1 ];then
+      cat << EOF
     - id: shellcheck
     - id: mdformat-check
     - id: mdformat
     - id: validate-pyproject
 EOF
-  fi
-  if [ "$PRE_COMMIT_HOOKS" -eq 1 ];then
-     cat <<EOF
+    fi
+    if [ "$PRE_COMMIT_HOOKS" -eq 1 ];then
+       cat <<EOF
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
@@ -728,9 +747,9 @@ EOF
       args:
         - "--allow-missing-credentials"
 EOF
-  fi
-   if [ "$PRE_COMMIT_ACTIONLINT" -eq 1 ];then
-     cat <<EOF
+    fi
+    if [ "$PRE_COMMIT_ACTIONLINT" -eq 1 ];then
+      cat <<EOF
 - repo: https://github.com/rhysd/actionlint
   rev: v1.7.7
   hooks:
@@ -738,11 +757,15 @@ EOF
       args:
         - "-ignore=SC2129"  # allow individual redirects ({} >> file is not allowed in GitHub Actions' run)
 EOF
-  fi
-}  > .pre-commit-config.yaml
+    fi
+  }  > .pre-commit-config.yaml
+fi
 # }}}
 
 # .mise.toml {{{
+if [ -n "$PRE_COMMIT" ];then
+  enter_cmd="  \"[ -x \\\"$(git rev-parse --git-path hooks/pre-commit)\\\" ] ||$PROJECT_MANAGER run $PRE_COMMIT install >/dev/null\""
+fi
 {
   cat << EOF
 [env]
@@ -753,17 +776,7 @@ experimental = true
 
 [hooks]
 enter = [
-EOF
-  if [ "$PROJECT_MANAGER" = "uv" ];then
-    cat << EOF
-  "[ -x \"$(git rev-parse --git-path hooks/pre-commit)\" ] || uv run pre-commit install >/dev/null"
-EOF
-  else
-    cat << EOF
-  "[ -x \"$(git rev-parse --git-path hooks/pre-commit)\" ] || poetry run pre-commit install >/dev/null"
-EOF
-  fi
-  cat << EOF
+$enter_cmd
 ]
 EOF
 } > .mise.toml

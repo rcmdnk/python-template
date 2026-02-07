@@ -1,6 +1,6 @@
 [project]
 name = "python-template"
-version = "0.2.4"
+version = "0.2.5"
 description = ""
 authors = [ { name = "rcmdnk", email = "rcmdnk@gmail.com" } ]
 readme = "README.md"
@@ -23,13 +23,9 @@ dev = [
     "pytest-cov >= 7.0.0",
     "pytest-xdist >= 3.8.0",
     "pytest-benchmark >= 5.2.3",
-    "pyproject-pre-commit[ruff,ty] >= 0.5.1",
     "gitpython >= 3.1.46",
-    "types-pymysql>=1.1.0.20251220",
-    "types-pyyaml>=6.0.12.20250915",
-    "types-decorator>=5.2.0.20251101",
-    "types-redis>=4.6.0.20241004",
-    "types-six>=1.17.0.20251009",
+    "pyproject-pre-commit >= 0.6.1",
+    "prek>=0.3.1",
 ]
 
 [build-system]
@@ -79,14 +75,7 @@ inline-quotes = "single"
 quote-style = "single"
 docstring-code-format = true
 
-[tool.mypy]
-files = ["src/**/*.py"]
-strict = true
-warn_return_any = false
-ignore_missing_imports = true
-scripts_are_modules = true
-install_types = true
-non_interactive = true
+[tool.ty.rules]
 
 [tool.numpydoc_validation]
 checks = [
