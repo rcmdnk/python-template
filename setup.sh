@@ -354,7 +354,7 @@ dev = [
     "pytest-cov >= 7.0.0",
     "pytest-xdist >= 3.8.0",
     "pytest-benchmark >= 5.2.3",
-    "gitpython >= 3.1.46","$pyproject_pre_commit"
+    "gitpython >= 3.1.46",$pyproject_pre_commit
 ]
 
 [build-system]
