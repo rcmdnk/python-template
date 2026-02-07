@@ -793,6 +793,11 @@ sedi "s/          - \"ubuntu-latest\"/$os_list/" .github/workflows/test.yml
 sedi "s/inputs.main_os || 'ubuntu-latest'/inputs.main_os || '$OS_MAIN'/" .github/workflows/test.yml
 sedi "s/os: \[ubuntu-latest\]/os: \[$OS\]/" .github/workflows/test.yml
 sedi "s/setup-type: 'uv'/setup-type: '$PROJECT_MANAGER'/" .github/workflows/test.yml
+if [ -n "$PRE_COMMIT" ];then
+  sedi "s/prek/$PRE_COMMIT/" .github/workflows/test.yml
+else
+  sedi "/^ *prek.*/d" .github/workflows/test.yml
+fi
 # }}}
 
 rm -f setup.sh uv.lock .github/workflows/template_test.yml .github/FUNDING.yml

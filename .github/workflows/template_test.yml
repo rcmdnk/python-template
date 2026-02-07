@@ -50,10 +50,10 @@ jobs:
         id: pytest
         continue-on-error: true
         run: ${{matrix.project_manager}} run pytest --durations=0 --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=src  tests/ | tee pytest-coverage.txt
-      - name: pre-commit
-        id: preCommit
+      - name: prek
+        id: prek
         continue-on-error: true
-        run: ${{matrix.project_manager}} run pre-commit run -a
+        run: ${{matrix.project_manager}} run prek run -a
       - name: Pytest coverage comment
         id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
@@ -75,5 +75,5 @@ jobs:
       - name: Check tests
         run: |
           ((${{ steps.coverageComment.outputs.failures }} == 0)) && ((${{ steps.coverageComment.outputs.errors }} == 0)) || echo 'Test failed!'
-          test ${{ steps.preCommit.outcome }} == "success" || echo 'Need to fix by following pre-commit!'
-          ((${{ steps.coverageComment.outputs.failures }} == 0)) && ((${{ steps.coverageComment.outputs.errors }} == 0)) && test ${{ steps.preCommit.outcome }} == "success"
+          test ${{ steps.prek.outcome }} == "success" || echo 'Need to fix by following prek!'
+          ((${{ steps.coverageComment.outputs.failures }} == 0)) && ((${{ steps.coverageComment.outputs.errors }} == 0)) && test ${{ steps.prek.outcome }} == "success"
