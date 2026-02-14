@@ -24,17 +24,18 @@ $ source .venv/bin/activate
 
 ## pre-commit
 
-To check codes at the commit, use [pre-commit](https://pre-commit.com/).
+To check codes at the commit, use [prek](https://prek.j178.dev/),
+which is a pre-commit hook manager replacing [pre-commit](https://pre-commit.com/).
 
-`pre-commit` command will be installed in the uv environment.
+`prek` command will be installed in the uv development environment.
 
 First, run:
 
 ```
-$ pre-commit install
+$ prek install
 ```
 
-Then `pre-commit` will be run at the commit.
+Then `prek` will be run at the commit.
 
 Sometimes, you may want to skip the check. In that case, run:
 
@@ -42,10 +43,10 @@ Sometimes, you may want to skip the check. In that case, run:
 $ git commit --no-verify
 ```
 
-You can run `pre-commit` on entire repository manually:
+You can run `prek` on entire repository manually:
 
 ```
-$ pre-commit run -a
+$ prek run -a
 ```
 
 ## pytest
