@@ -9,6 +9,7 @@ OS="ubuntu-latest" # comma separated os versions, like "ubuntu-latest, macos-lat
 # shellcheck disable=SC2034
 OS_MAIN=${OS%%,*}
 CLI="no" # "yes" or "no"
+EXCLUDE_NEWER="1 week" # exclude newer versions of dependencies than this duration from the test. Set empty to disable it. Only for uv.
 PRE_COMMIT='prek' # 'pre-commit', 'prek' or '' to disable pre-commit setup
 CHECKERS="ruff,ty,numpydoc" # comma separated checkers, any of ruff,black,autoflake,autopep8,isort,flake8,bandit,mypy,ty,numpydoc
 PRE_COMMIT_PYPROJECT_OTHERS=1
@@ -361,6 +362,14 @@ dev = [
 requires = ["uv_build>=0.8.0,<0.9.0"]
 build-backend = "uv_build"
 EOF
+
+  if [ -n "$EXCLUDE_NEWER" ];then
+    cat << EOF
+[tool.uv]
+exclude-newer = "$EXCLUDE_NEWER"
+EOF
+  fi
+
   else
     if [ -n "$repo_url" ];then
       cat << EOF
