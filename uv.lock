@@ -8,7 +8,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-03-20T02:47:20.926432Z"
+exclude-newer = "2026-03-20T14:31:37.471018Z"
 exclude-newer-span = "P1W"
 
 [[package]]
@@ -911,7 +911,6 @@ source = { editable = "." }
 [package.dev-dependencies]
 dev = [
     { name = "gitpython" },
-    { name = "prek" },
     { name = "pyproject-pre-commit" },
     { name = "pytest" },
     { name = "pytest-benchmark" },
@@ -925,7 +924,6 @@ dev = [
 [package.metadata.requires-dev]
 dev = [
     { name = "gitpython", specifier = ">=3.1.46" },
-    { name = "prek", specifier = ">=0.3.1" },
     { name = "pyproject-pre-commit", specifier = ">=0.6.1" },
     { name = "pytest", specifier = ">=9.0.2" },
     { name = "pytest-benchmark", specifier = ">=5.2.3" },

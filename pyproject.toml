@@ -25,7 +25,6 @@ dev = [
     "pytest-benchmark >= 5.2.3",
     "gitpython >= 3.1.46",
     "pyproject-pre-commit >= 0.6.1",
-    "prek>=0.3.1",
 ]
 
 [build-system]

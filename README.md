@@ -24,6 +24,8 @@ Modify the repository info in **setup.sh** if necessary:
 | `PRE_COMMIT_PYPROJECT_OTHERS` | Set 1 to add additional pre-commit checkers (`shellcheck`, `mdformat`, `validate-pyproject`                                           | 1                             |
 | `PRE_COMMIT_HOOKS`            | Set 1 to add [pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks) to pre-commit checkers.                               | 1                             |
 | `PRE_COMMIT_ACTIONLINT`       | Set 1 to add [actionlint](https://github.com/pre-commit/pre-commit-hooks) to pre-commit checkers.                                     | 1                             |
+| `RENOVATE`                    | Set 1 to add renovate.json for Renovate bot.                                                                                          | 1                             |
+| `DEPENDBOT`                   | Set 1 to add dependabot.yml for GitHub Dependabot.                                                                                    | 0                             |
 | `LICENSE`                     | License type. Currently only Apache-2.0 is supported. Set empty to skip license setup.                                                | Apache-2.0                    |
 | `USER`                        | User name in **pyproject.toml** and **LICCENSE**.                                                                                     | `git config --get user.name`  |
 | `EMAIL`                       | Email address in **pyproject.toml**.                                                                                                  | `git config --get user.email` |

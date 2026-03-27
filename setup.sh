@@ -15,6 +15,8 @@ CHECKERS="ruff,ty,numpydoc" # comma separated checkers, any of ruff,black,autofl
 PRE_COMMIT_PYPROJECT_OTHERS=1
 PRE_COMMIT_HOOKS=1
 PRE_COMMIT_ACTIONLINT=1
+RENOVATE=1 # 1 to setup for Renovate, 0 to not setup
+DEPENDBOT=0 # 1 to setup for Dependabot, 0 to not setup
 LICENSE="Apache-2.0" # License type, currently only Apache-2.0 is supported. Set empty to skip license setup.
 USER=""
 EMAIL=""
@@ -572,6 +574,102 @@ checks = [
 EOF
   fi
 } > pyproject.toml
+# }}}
+
+# renovaet {{{
+if [ "$RENOVATE" -eq 1 ];then
+  cat << EOF > renovate.json
+{
+  "\$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":timezone(Asia/Tokyo)"
+  ],
+  "prHourlyLimit": 0,
+  "automerge": true,
+  "platformAutomerge": true,
+  "automergeType": "branch",
+  "automergeStrategy": "rebase",
+  "commitBodyTable": true,
+  "schedule": [
+    "before 3am on Monday"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "platformAutomerge": true,
+    "schedule": [
+      "before 6am on Monday"
+    ]
+  },
+  "pre-commit": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "minimumReleaseAge": "7 days"
+    }
+  ]
+}
+EOF
+else
+  rm -f renovate.json
+fi
+# }}}
+
+# dependabot {{{
+if [ "$DEPENDBOT" -eq 1 ];then
+  if [ "$PROJECT_MANAGER" = "uv" ];then
+    ecosystem="uv"
+  else
+    ecosystem="poetry"
+  fi
+  cat << EOF > .github/dependabot.yml
+version: 2
+updates:
+  - package_ecosystem="$ecosystem"
+    directory="/"
+    update-types:
+      - "minor"
+      - "patch"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+      timezone: "Asia/Tokyo"
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 7
+  - package_ecosystem="pre-commit"
+    directory="/"
+    update-types:
+        - "minor"
+        - "patch"
+    schedule:
+        interval: "weekly"
+        day: "monday"
+        time: "03:00"
+        timezone: "Asia/Tokyo"
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 7
+EOF
+else
+  rm -f .github/dependabot.yml
+fi
 # }}}
 
 # LICENSE {{{
