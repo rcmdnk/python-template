@@ -426,7 +426,7 @@ EOF
     cat << EOF
 
 [tool.pytest.ini_options]
-addopts = "-n auto"
+addopts = "-n auto --benchmark-disable"
 testpaths = ["tests",]
 
 [tool.ruff]

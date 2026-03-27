@@ -36,7 +36,7 @@ build-backend = "uv_build"
 exclude-newer = "1 week"
 
 [tool.pytest.ini_options]
-addopts = "-n auto"
+addopts = "-n auto --benchmark-disable"
 testpaths = ["tests",]
 
 [tool.ruff]
