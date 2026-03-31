@@ -617,6 +617,14 @@ if [ "$RENOVATE" -eq 1 ];then
         "patch"
       ],
       "minimumReleaseAge": "7 days"
+    },
+    {
+      "groupName": "Python",
+      "groupSlug": "Python",
+      "enabled": false,
+      "matchPackageNames": [
+        "/python/"
+      ]
     }
   ]
 }
