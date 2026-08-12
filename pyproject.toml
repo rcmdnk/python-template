@@ -45,6 +45,7 @@ line-length = 79
 select = ["ALL"]
 
 ignore = [
+    "CPY001", # Missing copyright notice at top of file
     "E203", # Not PEP8 compliant and black insert space around slice: [Frequently Asked Questions - Black 22.12.0 documentation](https://black.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated)
     "E501", # Line too long. Disable it to allow long lines of comments and print lines which black allows.
     "D100", "D102", "D103", "D104", "D105", "D106", "D107", # Missing docstrings other than class (D101)
